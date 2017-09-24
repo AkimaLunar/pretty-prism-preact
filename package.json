@@ -2,6 +2,10 @@
   "name": "pretty-prism-preact",
   "version": "1.0.0",
   "description": "Preact PWA: Pretty Prism",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AkimaLunar/pretty-prism-preact.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "eslint src && preact test",
@@ -19,10 +23,10 @@
   "devDependencies": {
     "eslint": "^4.7.2",
     "eslint-config-synacor": "^2.0.0",
+    "eslint-plugin-react": "^7.3.0",
     "if-env": "^1.0.0",
-    "preact-cli": "^1.4.1"
-  },
-  "dependencies": {
-    "postcss": "^6.0.0"
+    "postcss": "^6.0.0",
+    "preact-cli": "^1.4.1",
+    "prettier-eslint": "^8.1.1"
   }
 }

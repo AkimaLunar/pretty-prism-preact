@@ -1,5 +1,17 @@
 @import "../../style/base/variables";
 
+.figure {
+  margin: 0;
+  padding: 1rem 0;
+}
+.figure figcaption {
+  color: $color-medium-grey;
+}
+.figure figcaption,
+.figure img {
+  display: inline-block;
+}
 .avatar {
   border-radius: 50%;
+  border: 1px solid $color-light-grey;
 }

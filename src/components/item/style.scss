@@ -1,0 +1,7 @@
+@import "../../style/base/variables";
+
+img.item {
+  border-radius: $base-border-radius;
+  width: 100%;
+  box-shadow: $box-shadow-0;
+}

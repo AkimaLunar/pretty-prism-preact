@@ -20,10 +20,10 @@ export default class Header extends Component {
           <Link activeClassName={style.active} href="/">
             Squad
           </Link>
-          <Link activeClassName={style.active} href="/profile">
+          <Link activeClassName={style.active} href="/filter/nearby">
             Nearby
           </Link>
-          <Link activeClassName={style.active} href="/profile/john">
+          <Link activeClassName={style.active} href="/filter/your-collection">
             Your Collection
           </Link>
         </nav>

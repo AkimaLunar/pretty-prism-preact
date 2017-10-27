@@ -5,6 +5,7 @@ import Header from './header';
 import Feed from '../routes/feed';
 import Home from '../routes/home';
 import Profile from '../routes/profile';
+import Polish from '../routes/polish';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
 
@@ -26,6 +27,8 @@ export default class App extends Component {
           <Feed path="/filter/:filter" />
           <Profile path="/profile/" user="me" />
           <Profile path="/profile/:user" />
+          <Polish path="/polish/:id" />
+          <Feed default path="/" filter="squad" />
         </Router>
       </div>
     );

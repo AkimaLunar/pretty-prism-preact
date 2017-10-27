@@ -1,6 +1,9 @@
 @import "../../style/base/variables";
 
-img.item {
+.item__card {
+  display: block;
+}
+img.item__image {
   border-radius: $base-border-radius;
   width: 100%;
   box-shadow: $box-shadow-0;

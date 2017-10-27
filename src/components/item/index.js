@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { Link } from 'preact-router/match';
 import PropTypes from 'prop-types';
 import style from './style';
 import UserChip from '../userchip';
@@ -7,14 +8,14 @@ export default class Item extends Component {
   constructor(props) {
     super(props);
   }
-  render({ image, owners }) {
+  render({ _id, image, owners }) {
     return (
-      <article>
-        <img src={image} class={style.item} />
+      <Link href={`/polish/${_id}`} class={style.item__card}>
+        <img src={image} class={style.item__image} />
         <footer>
           <UserChip user={owners[0]} />
         </footer>
-      </article>
+      </Link>
     );
   }
 }

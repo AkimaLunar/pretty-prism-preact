@@ -7,9 +7,9 @@ export default class Item extends Component {
   constructor(props) {
     super(props);
   }
-  render({ image, name, owners }) {
+  render({ image, owners }) {
     return (
-      <article class={style.figure}>
+      <article>
         <img src={image} class={style.item} />
         <footer>
           <UserChip user={owners[0]} />
@@ -26,11 +26,11 @@ Item.propTypes = {
 };
 
 Item.defaultProps = {
-  _id: '3052620636',
+  _id: '0000000',
   image:
     'https://github.com/AkimaLunar/pretty-prism-preact/raw/master/src/IMG_4234.JPG',
-  name: 'Purple Unicorn',
-  brand: 'Nails Inc.',
+  name: 'Placeholder',
+  brand: '[placeholder]',
   location: '40.712633, -73.753066',
   owners: [
     {

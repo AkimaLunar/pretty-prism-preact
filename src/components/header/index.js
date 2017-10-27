@@ -12,7 +12,7 @@ export default class Header extends Component {
         <p class={style.userchip}>
           <Link activeClassName={style.active} href="/profile/john">
             user.name&ensp;
-            <Avatar />{' '}
+            <Avatar online={'true'}/>{' '}
           </Link>
         </p>
 

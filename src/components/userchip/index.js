@@ -6,12 +6,11 @@ export default class UserChip extends Component {
   constructor(props) {
     super(props);
   }
-  render() {
+  render(props) {
     return (
       <figure class={style.figure}>
         <img src="http://i.pravatar.cc/34" class={style.avatar} />
-        {/* <figcaption>{this.props.username}</figcaption> */}
-        <figcaption>&ensp;not.working</figcaption>
+        <figcaption>&ensp;{props.user.username}</figcaption>
       </figure>
     );
   }

@@ -1,0 +1,27 @@
+/* Base Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+* {
+  box-sizing: border-box;
+}
+
+/* NOTE
+html is set to 62.5% so that all the REM measurements
+are based on 10px sizing. So basically 1.5rem = 15px :) */
+html {
+  font-size: 62.5%;
+  background-color: $base-background-color;
+}
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: $font-weight-regular;
+  font-family: $base-font-family;
+  color: $base-font-color;
+  transition: background-color 1s ease-in-out;
+}

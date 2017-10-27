@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "_id": "3052620636",
+      "name": "Purple Unicorn",
+      "brand": "Nails Inc.",
+      "location": "40.712633, -73.753066",
+      "owners": [
+        {
+          "_id": "847592845926",
+          "username": "Ciew1987"
+        },
+        {
+          "_id": "847592845927",
+          "username": "joyful.cat"
+        }
+      ]
+    },
+    {
+      "_id": "3052620663",
+      "name": "Pink Dream",
+      "brand": "Nails Inc.",
+      "location": "45.330675, -71.990184",
+      "owners": [
+        {
+          "_id": "847592845927",
+          "username": "joyful.cat"
+        },
+        {
+          "_id": "847592845926",
+          "username": "Ciew1987"
+        }
+      ]
+    },
+    {
+      "_id": "2503632221",
+      "name": "Blue Statement",
+      "brand": "Nails Inc.",
+      "location": "48.427446, -123.446999",
+      "owners": [
+        {
+          "_id": "847592845927",
+          "username": "joyful.cat"
+        },
+        {
+          "_id": "847592845926",
+          "username": "Ciew1987"
+        }
+      ]
+    }
+  ]
+}

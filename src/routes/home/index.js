@@ -7,7 +7,6 @@ export default class Home extends Component {
       <div class={style.home}>
         <h1>Home</h1>
         <p>This is the Pretty Prism.</p>
-        <p>Is this working?</p>
       </div>
     );
   }

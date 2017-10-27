@@ -2,23 +2,29 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
 import style from './style';
 
-import UserChip from '../userchip';
+import Avatar from '../avatar';
+
 export default class Header extends Component {
   render() {
     return (
       <header class={style.header}>
-        <h1>Pretty Prism</h1>
+        <h1>PrettyPrism</h1>
+        <p class={style.userchip}>
+          <Link activeClassName={style.active} href="/profile/john">
+            user.name&ensp;
+            <Avatar />{' '}
+          </Link>
+        </p>
 
         <nav>
-          <UserChip />
           <Link activeClassName={style.active} href="/">
-            Home
+            Squad
           </Link>
           <Link activeClassName={style.active} href="/profile">
-            Me
+            Nearby
           </Link>
           <Link activeClassName={style.active} href="/profile/john">
-            John
+            Your Collection
           </Link>
         </nav>
       </header>

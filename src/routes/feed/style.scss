@@ -1,0 +1,14 @@
+@import "../../style/base/variables";
+
+.feed {
+  padding: $view-padding;
+  min-height: 100%;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+  grid-auto-rows: minmax(10rem, auto);
+}

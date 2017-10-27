@@ -1,0 +1,55 @@
+/* Utilities
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.browserupgrade {
+  background: $color-accent;
+  color: $base-font-color;
+  padding: 1rem;
+  font-weight: $font-weight-bold;
+  text-align: center;
+}
+
+/* Misc
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: $base-border;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: $color-accent;
+  text-shadow: none;
+}
+
+::selection {
+  background: $color-accent;
+  text-shadow: none;
+}

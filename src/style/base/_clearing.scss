@@ -1,0 +1,12 @@
+/* Clearing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Self Clearing Goodness */
+.container::after,
+.row::after,
+.clearfix {
+  clear: both;
+  content: '';
+  display: table;
+}
+

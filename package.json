@@ -25,12 +25,13 @@
     "eslint-config-synacor": "^2.0.0",
     "eslint-plugin-react": "^7.3.0",
     "if-env": "^1.0.0",
+    "node-sass": "^4.5.3",
     "postcss": "^6.0.0",
     "preact-cli": "^1.4.1",
-    "prettier-eslint": "^8.1.1"
+    "prettier-eslint": "^8.1.1",
+    "sass-loader": "^6.0.6"
   },
   "dependencies": {
-    "node-sass": "^4.5.3",
-    "sass-loader": "^6.0.6"
+    "classnames": "^2.2.5"
   }
 }

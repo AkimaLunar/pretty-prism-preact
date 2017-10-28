@@ -32,6 +32,7 @@
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "linkstate": "^1.1.0"
   }
 }

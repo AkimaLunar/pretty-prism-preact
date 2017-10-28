@@ -1,0 +1,16 @@
+@import "../../style/base/variables";
+
+.username {
+  color: $color-primary;
+  font-weight: $font-weight-bold;
+}
+.online::before {
+  content: "";
+  display: inline-block;
+  vertical-align: -6%;
+  margin-right: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  background-color: #42f4a1;
+  border-radius: 50%;
+}

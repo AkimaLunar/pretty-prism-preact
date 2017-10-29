@@ -12,6 +12,10 @@
   display: inline-block;
 }
 .avatar {
+  display: inline-block;
   border-radius: 50%;
   border: 1px solid $color-light-grey;
+  background-color: $color-x-light-grey;
+  height: 2.75rem;
+  width: 2.75rem;
 }

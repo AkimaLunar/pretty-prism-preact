@@ -35,17 +35,16 @@ export default class Polish extends Component {
       comment: ''
     };
   }
-  render({ id }, state) {
+  render(props, state) {
+    let { images, owners } = props.location.state.item;
+    // TODO: Add swipe element here
     return (
       <main class={style.polish}>
-        <img
-          src="https://github.com/AkimaLunar/pretty-prism-preact/raw/master/src/IMG_4234.JPG"
-          class={style.polish__image}
-        />
+        <img src={images[0]} class={style.polish__image} />
         <footer class={style.polish__footer}>
           <section class={style.polish__info}>
-            <UserChip user={user} />
-            &nbsp;|&nbsp;swapped XXX times
+            <UserChip user={owners[0]} />
+            &nbsp;|&nbsp;swapped {owners.length - 1} times
           </section>
           <button class={`${style.polish__button} button button--primary`}>
             {' '}
@@ -53,7 +52,7 @@ export default class Polish extends Component {
           </button>
           <section>
             <h3 class={style.polish__heading}>
-              <i class="twa twa-dancers" />&nbsp;Chatroom
+              <i class="twa twa--dancers" />&nbsp;Chatroom
             </h3>
             {COMMENTS.map(comment => (
               <p class={style.polish__comment}>
@@ -66,7 +65,7 @@ export default class Polish extends Component {
             placeholder="Write kind comments here"
             spellcheck="true"
             class={style.polish__textarea}
-            value={this.state.comment}
+            value={state.comment}
             onChange={linkState(this, 'comment')}
           />
           <button class={style.polish__button}>comment</button>

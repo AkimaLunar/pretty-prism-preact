@@ -19,7 +19,7 @@
 $size-map: ("lg": 1.33, "2x": 2, "3x": 3, "4x": 4, "5x": 5);
 
 @each $name, $size in $size-map {
-  .twa-#{$name} {
+  .twa--#{$name} {
     height: 1em * $size;
     width: 1em * $size;
     margin: 0 0.05em * $size 0 0.1em * $size;
@@ -859,7 +859,7 @@ $emoji-map: (
 );
 
 @each $code, $name in $emoji-map {
-  .twa-#{$name} {
+  .twa--#{$name} {
     background-image: url("https://twemoji.maxcdn.com/svg/#{$code}.svg");
   }
 }

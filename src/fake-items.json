@@ -2,8 +2,8 @@
   "data": [
     {
       "_id": "3052620636",
-      "image":
-        "https://github.com/AkimaLunar/pretty-prism-preact/raw/master/src/IMG_4234.JPG",
+      "images":
+        ["https://github.com/AkimaLunar/pretty-prism-preact/raw/master/src/IMG_4234.JPG"],
       "name": "Purple Unicorn",
       "brand": "Nails Inc.",
       "location": "40.712633, -73.753066",
@@ -21,6 +21,8 @@
     },
     {
       "_id": "3052620663",
+      "images":
+        ["https://github.com/AkimaLunar/pretty-prism-preact/raw/master/src/IMG_4234.JPG"],
       "name": "Pink Dream",
       "brand": "Nails Inc.",
       "location": "45.330675, -71.990184",
@@ -37,6 +39,8 @@
     },
     {
       "_id": "2503632221",
+      "images":
+        ["https://github.com/AkimaLunar/pretty-prism-preact/raw/master/src/IMG_4234.JPG"],
       "name": "Blue Statement",
       "brand": "Nails Inc.",
       "location": "48.427446, -123.446999",

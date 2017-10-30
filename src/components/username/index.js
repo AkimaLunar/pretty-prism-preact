@@ -14,8 +14,10 @@ export function Username(props) {
 }
 
 Username.propTypes = {
-  username: PropTypes.string.isRequired,
-  online: PropTypes.bool
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    online: PropTypes.bool
+  })
 };
 
 Username.defaultProps = {

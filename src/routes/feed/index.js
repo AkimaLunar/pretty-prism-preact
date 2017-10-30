@@ -13,7 +13,7 @@ export default class Feed extends Component {
   componentDidMount() {
     // fetch(props.search)
     fetch(
-      'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/master/src/fake-items.json'
+      'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/70d066a16cd4fabd06c3e79d06ab5b9c8f1273e2/src/fake-items.json'
     )
       .then(res => res.json())
       .then(feed =>
@@ -34,7 +34,7 @@ export default class Feed extends Component {
           <p>Fetching the goodness...</p>
         ) : (
           <main class={style.grid}>
-            {feed.map(item => <Item {...item} key={item._id} />)}
+            {feed.map(item => <Item item={item} key={item._id} />)}
           </main>
         )}
       </div>

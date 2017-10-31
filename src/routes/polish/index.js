@@ -5,11 +5,8 @@ import linkState from 'linkstate';
 import UserChip from '../../components/userchip';
 import Username from '../../components/username';
 
-// TODO: Should be passed with the route
-const user = {
-  username: 'gary.og',
-  avatar: 'http://i.pravatar.cc/34'
-};
+// TODO: Implement comments
+
 const COMMENTS = [
   {
     user: {
@@ -36,7 +33,7 @@ export default class Polish extends Component {
     };
   }
   render(props, state) {
-    let { images, owners } = props.location.state.item;
+    let { images, owners } = props.location.state.data;
     // TODO: Add swipe element here
     return (
       <main class={style.polish}>

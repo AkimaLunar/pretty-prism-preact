@@ -17,12 +17,10 @@ export default class Feed extends Component {
     )
       .then(res => res.json())
       .then(feed =>
-        setTimeout(() => {
-          this.setState({
-            feed: feed.data,
-            loading: false
-          });
-        }, 1000)
+        this.setState({
+          feed: feed.data,
+          loading: false
+        })
       )
       .catch(err => console.error(err));
   }

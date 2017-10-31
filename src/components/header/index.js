@@ -1,10 +1,12 @@
 import { h, Component } from 'preact';
 import Link from 'react-router-dom/Link';
-import classNames from 'classnames';
 import style from './style';
-import Avatar from '../avatar';
+
+import Navigation from '../navigation';
+import navigationProvider from '../../providers/navigationProvider';
 
 const LOGGED_IN_USER = {
+  _id: '000112233',
   username: 'user.name77',
   avatar: 'http://i.pravatar.cc/34'
 };
@@ -13,37 +15,30 @@ export default class Header extends Component {
     super(props);
   }
   render() {
-    let extended = this.context.router.route.location.pathname === '/';
-    let headerClass = classNames({
-      [style.header]: true,
-      [style.header__extended]: extended,
-      [style.header__regular]: !extended
-    });
+    const currentPath = this.context.router.route.location.pathname;
+    let currentData;
+    this.context.router.route.location.state
+      ? (currentData = this.context.router.route.location.state.data)
+      : '';
+    const navigationData = navigationProvider(currentPath, currentData);
     return (
-      <header class={headerClass}>
-        <Link to="/">
-          <h1>PrettyPrism</h1>
-        </Link>
-        <p class={style.userchip}>
-          <Link
-            activeClassName={style.active}
-            to={`/profile/${LOGGED_IN_USER.username}`}
-          >
-            {LOGGED_IN_USER.username}&ensp;
-            <Avatar user={LOGGED_IN_USER} online={true} />{' '}
-          </Link>
-        </p>
-        {extended ? (
-          <nav>
-            <Link activeClassName={style.active} to="/">
-              Squad
-            </Link>
-            <Link activeClassName={style.active} to="/filter/nearby">
-              Nearby
-            </Link>
-            <Link activeClassName={style.active} to="/filter/your-collection">
-              Your Collection
-            </Link>
+      <header class={style.header}>
+        <nav class={style.header__nav}>
+          <Navigation data={navigationData} user={LOGGED_IN_USER} />
+        </nav>
+        {navigationData.extended ? (
+          <nav class={style.header__extended}>
+            <div class={style.header__float}>
+              <Link activeClassName={style.active} to="/">
+                Squad
+              </Link>
+              <Link activeClassName={style.active} to="/filter/nearby">
+                Nearby
+              </Link>
+              <Link activeClassName={style.active} to="/filter/your-collection">
+                Your Collection
+              </Link>
+            </div>
           </nav>
         ) : (
           {}

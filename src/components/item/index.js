@@ -14,7 +14,7 @@ export default class Item extends Component {
         to={{
           pathname: `/polish/${item._id}`,
           state: {
-            item: item
+            data: item
           }
         }}
         class={style.item__card}

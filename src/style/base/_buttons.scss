@@ -57,7 +57,5 @@ button.button--primary:focus,
 input[type="submit"].button--primary:focus,
 input[type="reset"].button--primary:focus,
 input[type="button"].button--primary:focus {
-  color: #fff;
-  background-color: lighten($color-primary, 20);
-  border-color: lighten($color-primary, 20);
+  background-color: lighten($color-secondary, 5);
 }

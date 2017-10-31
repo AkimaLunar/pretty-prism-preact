@@ -23,6 +23,7 @@ export default class App extends Component {
           <Switch>
             <Route exact path="/" component={Feed} />
             <Route path="/filter/:filter" component={Feed} />
+            {/* TODO: Implement loggedInUser provider */}
             <Route path="/profile/" exact component={Profile} user="me" />
             <Route path="/profile/:user" component={Profile} />
             <Route path="/polish/:id" component={Polish} />

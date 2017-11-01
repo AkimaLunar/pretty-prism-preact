@@ -1,0 +1,43 @@
+@import "../../style/base/variables";
+
+.navigation {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  &__left,
+  &__right {
+    display: inline-block;
+    margin: 0;
+    a {
+      color: white;
+    }
+  }
+  &__right {
+    text-align: right;
+  }
+  &__logo {
+    font-family: $heading-font-family;
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0;
+  }
+  &__title {
+    font-weight: $font-weight-bold;
+    color: $color-accent;
+  }
+  &__back {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 2rem;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    vertical-align: -38% !important;
+  }
+}

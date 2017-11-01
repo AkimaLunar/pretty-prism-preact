@@ -8,6 +8,8 @@
 html is set to 62.5% so that all the REM measurements
 are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
+  height: 100%;
+  width: 100%;
   font-size: 62.5%;
   background-color: $base-background-color;
 }

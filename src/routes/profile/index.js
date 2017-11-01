@@ -1,46 +1,47 @@
 import { h, Component } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
 
+import Feed from '../../components/feed';
+
 export default class Profile extends Component {
-  state = {
-    time: Date.now(),
-    count: 10
-  };
-
-  // gets called when this route is navigated to
-  componentDidMount() {
-    // start a timer for the clock:
-    this.timer = setInterval(this.updateTime, 1000);
+  constructor(props) {
+    super(props);
+    this.state = {
+      // TODO: API call >> setState >> get full user profile
+      user: props.location.state.data
+    };
   }
-
-  // gets called just before navigating away from the route
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  // update the current time
-  updateTime = () => {
-    this.setState({ time: Date.now() });
-  };
-
-  increment = () => {
-    this.setState({ count: this.state.count + 1 });
-  };
-
-  // Note: `user` comes from the URL, courtesy of our router
-  render({ user }, { time, count }) {
+  render(props, state) {
+    let { avatar, username } = props.location.state.data;
     return (
       <div class={style.profile}>
-        <h1>Profile: {user}</h1>
-        <p>This is the user profile for a user named {user}.</p>
+        <main class={style.profile__main}>
+          <img
+            src={avatar}
+            class={style.profile__avatar}
+            alt={`${username} profile`}
+          />
+          <ul class={style.profile__info}>
+            <li class={style.profile__left}>
+              <span class="font__accent">15</span> polishes
+            </li>
+            <li class={style.profile__right}>Location, ST</li>
+          </ul>
 
-        <div>Current time: {new Date(time).toLocaleString()}</div>
-
-        <p>
-          <button onClick={this.increment}>Click Me</button> Clicked {count}{' '}
-          times.
-        </p>
+          <Feed />
+        </main>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          height="100%"
+          class={style.profile__circle}
+        >
+          <circle cx="50%" cy="0" r="54%" />
+        </svg>
       </div>
     );
   }
 }
+
+Profile.propTypes = {};

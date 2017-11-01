@@ -1,7 +1,47 @@
 @import "../../style/base/variables";
 
 .profile {
-  padding: $view-padding;
   min-height: 100%;
   width: 100%;
+  background: linear-gradient(180deg, $color-accent, $base-background-color);
+  &__circle {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    fill: transparentize($base-background-color, 0.1);
+    z-index: 0;
+  }
+  &__main {
+    position: relative;
+    padding: 5.4rem 1rem 0 1rem;
+    z-index: 10;
+  }
+  &__avatar {
+    display: block;
+    margin: 2rem auto 2rem auto;
+    height: 14rem;
+    width: 14rem;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    border-radius: 50%;
+  }
+  &__info {
+    list-style: none;
+    margin: 0;
+    margin-bottom: 2rem;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  &__left,
+  &__right {
+    margin: 0;
+    padding: 0 2rem;
+    display: inline-block;
+    flex-grow: 1;
+  }
+  &__left {
+    text-align: right;
+    border-right: $base-border;
+  }
 }

@@ -12,7 +12,7 @@ export default class Profile extends Component {
       user: props.location.state.data
     };
   }
-  render(props, state) {
+  render(props) {
     let { avatar, username } = props.location.state.data;
     return (
       <div class={style.profile}>
@@ -44,4 +44,6 @@ export default class Profile extends Component {
   }
 }
 
-Profile.propTypes = {};
+Profile.propTypes = {
+  location: PropTypes.object
+};

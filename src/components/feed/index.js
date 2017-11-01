@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import style from './style';
 
 import Item from '../item';
@@ -23,8 +23,10 @@ export default class Feed extends Component {
           feed: feed.data,
           loading: false
         })
-      )
-      .catch(err => console.error(err));
+      );
+
+    // TODO: Error handling
+    // .catch(err => console.error(err));
   }
 
   render(props, { loading, feed }) {

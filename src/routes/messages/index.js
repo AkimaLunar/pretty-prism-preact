@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import style from './style';
 
 import Message from '../../components/message';
@@ -13,6 +13,7 @@ export default class Messages extends Component {
     };
   }
   componentDidMount() {
+    // TODO: API goes here
     // fetch(props.search)
     fetch(
       'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/master/src/fake-messages.json'
@@ -23,8 +24,10 @@ export default class Messages extends Component {
           messages: messages.data,
           loading: false
         })
-      )
-      .catch(err => console.error(err));
+      );
+
+    // TODO: Error handling
+    // .catch(err => console.error(err));
   }
 
   render(props, { loading, messages }) {
@@ -34,7 +37,11 @@ export default class Messages extends Component {
         {loading ? (
           <p>Fetching the goodness...</p>
         ) : (
-          <main>{messages.map(message => <Message message={message} />)}</main>
+          <main>
+            {messages.map(message => (
+              <Message message={message} key={message._id} />
+            ))}
+          </main>
         )}
       </div>
     );

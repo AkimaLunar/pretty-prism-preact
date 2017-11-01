@@ -12,12 +12,17 @@ export default function Navigation(props) {
         {this.props.data.extended ? (
           <h1 class={style.navigation__logo}>PrettyPrism</h1>
         ) : (
-          <Link to="/">
+          <a
+            onClick={e => {
+              e.preventDefault();
+              props.goBack();
+            }}
+          >
             <i
               class={`${style.navigation__back} twa twa--point-left `}
             />&nbsp;Back&ensp;|&ensp;
             <span class={style.navigation__title}>{this.props.data.title}</span>
-          </Link>
+          </a>
         )}
       </li>
       <li class={style.navigation__right}>
@@ -44,5 +49,6 @@ Navigation.propTypes = {
     username: PropTypes.string,
     avatar: PropTypes.string
   }),
-  data: PropTypes.object
+  data: PropTypes.object,
+  goBack: PropTypes.func
 };

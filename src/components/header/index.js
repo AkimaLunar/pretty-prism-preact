@@ -14,6 +14,9 @@ export default class Header extends Component {
   constructor(props) {
     super(props);
   }
+  goBack() {
+    this.context.router.history.goBack();
+  }
   render() {
     const currentPath = this.context.router.route.location.pathname;
     let currentData;
@@ -24,7 +27,11 @@ export default class Header extends Component {
     return (
       <header class={style.header}>
         <nav class={style.header__nav}>
-          <Navigation data={navigationData} user={LOGGED_IN_USER} />
+          <Navigation
+            data={navigationData}
+            user={LOGGED_IN_USER}
+            goBack={() => this.goBack()}
+          />
         </nav>
         {navigationData.extended ? (
           <nav class={style.header__extended}>

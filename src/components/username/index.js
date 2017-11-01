@@ -10,7 +10,7 @@ export function Username(props) {
     [style.username]: true,
     [style.online]: online
   });
-  return <span class={usernameClass}>{this.props.user.username}</span>;
+  return <span class={usernameClass}>{props.user.username}</span>;
 }
 
 Username.propTypes = {

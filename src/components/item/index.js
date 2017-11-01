@@ -1,7 +1,8 @@
 import { h, Component } from 'preact';
-import Link from 'react-router-dom/Link';
 import PropTypes from 'prop-types';
 import style from './style';
+
+import Link from 'react-router-dom/Link';
 import UserChip from '../userchip';
 
 export default class Item extends Component {

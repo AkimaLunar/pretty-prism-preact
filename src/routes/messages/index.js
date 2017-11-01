@@ -2,25 +2,26 @@ import { h, Component } from 'preact';
 // import PropTypes from 'prop-types';
 import style from './style';
 
-import Item from '../item';
+import Message from '../../components/message';
 
-export default class Feed extends Component {
+export default class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      feed: null,
+      messages: null,
       loading: true
     };
   }
   componentDidMount() {
+    // TODO: API goes here
     // fetch(props.search)
     fetch(
-      'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/70d066a16cd4fabd06c3e79d06ab5b9c8f1273e2/src/fake-items.json'
+      'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/master/src/fake-messages.json'
     )
       .then(res => res.json())
-      .then(feed =>
+      .then(messages =>
         this.setState({
-          feed: feed.data,
+          messages: messages.data,
           loading: false
         })
       );
@@ -29,14 +30,17 @@ export default class Feed extends Component {
     // .catch(err => console.error(err));
   }
 
-  render(props, { loading, feed }) {
+  render(props, { loading, messages }) {
     return (
-      <div class={style.feed}>
+      <div class={style.messages}>
+        <h1>Messages</h1>
         {loading ? (
           <p>Fetching the goodness...</p>
         ) : (
-          <main class={style.grid}>
-            {feed.map(item => <Item item={item} key={item._id} />)}
+          <main>
+            {messages.map(message => (
+              <Message message={message} key={message._id} />
+            ))}
           </main>
         )}
       </div>

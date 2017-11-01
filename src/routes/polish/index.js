@@ -9,6 +9,7 @@ import Username from '../../components/username';
 
 const COMMENTS = [
   {
+    _id: '9489494949',
     user: {
       _id: '329574383',
       username: 'mary.beeeee'
@@ -17,6 +18,7 @@ const COMMENTS = [
     timestamp: 'Sat Oct 28 2017 16:10:50 GMT-0700 (Pacific Daylight Time)'
   },
   {
+    _id: '48484626269595',
     user: {
       _id: '585837332',
       username: 'rihanna88'
@@ -36,7 +38,7 @@ export default class Polish extends Component {
     let { images, owners } = props.location.state.data;
     // TODO: Add swipe element here
     return (
-      <main class={style.polish}>
+      <main>
         <img src={images[0]} class={style.polish__image} />
         <footer class={style.polish__footer}>
           <section class={style.polish__info}>
@@ -52,7 +54,7 @@ export default class Polish extends Component {
               <i class="twa twa--dancers" />&nbsp;Chatroom
             </h3>
             {COMMENTS.map(comment => (
-              <p class={style.polish__comment}>
+              <p class={style.polish__comment} key={comment._id}>
                 <Username user={comment.user} /> {comment.text}
               </p>
             ))}

@@ -15,6 +15,11 @@ export default function navigationProvider(path, data) {
       title: data.username,
       extended: false
     };
+  case /(^\/messages\/)/.test(path):
+    return {
+      title: 'Messages',
+      extended: false
+    };
   default:
     return {
       title: 'PrettyPrism',

@@ -3,3 +3,24 @@
 .polish {
   padding: $view-padding;
 }
+.container {
+  width: 100vw;
+  height: 100px;
+  overflow: hidden;
+
+  ul {
+    width: 300%;
+    overflow: hidden;
+
+    li {
+      float: left;
+      width: 100vw;
+      height: 100px;
+    }
+  }
+}
+
+.swipe {
+  width: 100vw;
+  height: 100px;
+}

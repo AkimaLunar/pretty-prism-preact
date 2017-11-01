@@ -36,7 +36,7 @@ export default class Polish extends Component {
     let { images, owners } = props.location.state.data;
     // TODO: Add swipe element here
     return (
-      <main class={style.polish}>
+      <main>
         <img src={images[0]} class={style.polish__image} />
         <footer class={style.polish__footer}>
           <section class={style.polish__info}>

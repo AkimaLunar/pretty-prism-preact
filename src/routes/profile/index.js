@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
 
+import Feed from '../../components/feed';
+
 export default class Profile extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +28,8 @@ export default class Profile extends Component {
             </li>
             <li class={style.profile__right}>Location, ST</li>
           </ul>
+
+          <Feed />
         </main>
         <svg
           xmlns="http://www.w3.org/2000/svg"

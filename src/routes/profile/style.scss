@@ -27,21 +27,21 @@
   &__info {
     list-style: none;
     margin: 0;
+    margin-bottom: 2rem;
     padding: 0;
     display: flex;
     flex-direction: row;
     align-items: stretch;
   }
+  &__left,
+  &__right {
+    margin: 0;
+    padding: 0 2rem;
+    display: inline-block;
+    flex-grow: 1;
+  }
   &__left {
     text-align: right;
-    display: inline-block;
-    flex-grow: 1;
-    padding: 0 2rem;
     border-right: $base-border;
-  }
-  &__right {
-    display: inline-block;
-    flex-grow: 1;
-    padding: 0 2rem;
   }
 }

@@ -14,7 +14,7 @@ export default function Navigation(props) {
         ) : (
           <Link to="/">
             <i
-              class={`twa twa--point-left ${style.navigation__back}`}
+              class={`${style.navigation__back} twa twa--point-left `}
             />&nbsp;Back&ensp;|&ensp;
             <span class={style.navigation__title}>{this.props.data.title}</span>
           </Link>
@@ -44,7 +44,5 @@ Navigation.propTypes = {
     username: PropTypes.string,
     avatar: PropTypes.string
   }),
-  path: PropTypes.string,
-  data: PropTypes.object,
-  extended: PropTypes.bool
+  data: PropTypes.object
 };

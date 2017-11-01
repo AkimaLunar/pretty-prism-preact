@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import style from './style';
 
-import Item from '../../components/item';
+import Item from '../item';
 export default class Feed extends Component {
   constructor(props) {
     super(props);

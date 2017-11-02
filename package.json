@@ -7,8 +7,37 @@
     "url": "https://github.com/AkimaLunar/pretty-prism-preact.git"
   },
   "main": "index.js",
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/tests/__mocks__/browserMocks.js"
+    ],
+    "testURL": "http://localhost:8080",
+    "transform": {
+      "\\.(js|jsx)$": "./transformPreprocessor.js"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "identity-obj-proxy",
+      "^./style$": "identity-obj-proxy",
+      "^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
+      "^react$": "preact-compat",
+      "^react-dom$": "preact-compat",
+      "^create-react-class$": "preact-compat/lib/create-react-class",
+      "^react-addons-css-transition-group$": "preact-css-transition-group"
+    }
+  },
   "scripts": {
-    "test": "eslint src",
+    "lint": "eslint src",
+    "tests-only": "jest --no-cache",
+    "test": "eslint src && jest --no-cache",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --no-prerender",
     "serve": "preact build && preact serve",
@@ -21,13 +50,18 @@
     "extends": "eslint-config-synacor"
   },
   "devDependencies": {
+    "babel-jest": "^21.2.0",
     "eslint": "^4.7.2",
     "eslint-config-synacor": "^2.0.0",
+    "eslint-plugin-jest": "^21.2.0",
     "eslint-plugin-react": "^7.3.0",
+    "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
+    "jest": "^21.2.1",
     "node-sass": "^4.5.3",
     "postcss": "^6.0.0",
     "preact-cli": "^1.4.1",
+    "preact-render-spy": "^1.2.1",
     "prettier-eslint": "^8.1.1",
     "sass-loader": "^6.0.6"
   },

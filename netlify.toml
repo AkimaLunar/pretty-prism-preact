@@ -1,4 +1,0 @@
-[build]
-  command = "preact build --no-prerender"
-  publish = "build"
-  branch = "master"

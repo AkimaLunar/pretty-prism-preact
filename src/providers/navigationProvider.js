@@ -1,4 +1,9 @@
-export default function navigationProvider(path, data) {
+export default function navigationProvider(context) {
+  const path = context.router.route.location.pathname;
+  let data;
+  context.router.route.location.state
+    ? (data = context.router.route.location.state.data)
+    : '';
   switch (true) {
   case /(^\/$)|(^\/filter\/)/.test(path):
     return {

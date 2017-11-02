@@ -18,12 +18,7 @@ export default class Header extends Component {
     this.context.router.history.goBack();
   }
   render() {
-    const currentPath = this.context.router.route.location.pathname;
-    let currentData;
-    this.context.router.route.location.state
-      ? (currentData = this.context.router.route.location.state.data)
-      : '';
-    const navigationData = navigationProvider(currentPath, currentData);
+    const navigationData = navigationProvider(this.context);
     return (
       <header class={style.header}>
         <nav class={style.header__nav}>

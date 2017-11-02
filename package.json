@@ -27,7 +27,7 @@
     "if-env": "^1.0.0",
     "node-sass": "^4.5.3",
     "postcss": "^6.0.0",
-    "preact-cli": "^1.4.1",
+    "preact-cli": "^2.0.2",
     "prettier-eslint": "^8.1.1",
     "sass-loader": "^6.0.6"
   },

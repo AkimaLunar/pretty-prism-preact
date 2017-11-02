@@ -1,12 +1,19 @@
 import { h, Component } from 'preact';
 import style from './style';
 
+import Feed from '../../components/feed';
 export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: null
+    };
+  }
+
   render() {
     return (
       <div class={style.home}>
-        <h1>Home</h1>
-        <p>This is the Pretty Prism.</p>
+        <Feed />
       </div>
     );
   }

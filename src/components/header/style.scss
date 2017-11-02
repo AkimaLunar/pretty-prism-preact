@@ -5,64 +5,74 @@
   left: 0;
   top: 0;
   width: 100%;
-  height: 10rem;
   padding: 0;
-  background: $color-lilac;
   z-index: 50;
-  padding: 0 1rem;
-}
 
-.header h1 {
-  float: left;
-  margin: 0;
-  padding-top: 1.5rem;
-  font-family: $heading-font-family;
-  font-size: 2rem;
-  font-weight: $font-weight-bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #fff;
-}
+  & a {
+    text-decoration: none;
+  }
 
-.userchip {
-  float: right;
-  margin-bottom: 0;
-  padding-top: 1rem;
-}
-.userchip a {
-  color: #fff;
-  text-decoration: none;
-}
+  &__nav,
+  &__extended {
+    padding: 0 1rem;
+    background: $color-lilac;
+  }
 
-.header nav {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-content: start;
-  align-items: center;
-  top: 1rem;
-  height: 6.5rem;
-  font-size: 1.75rem;
-  padding: 1rem 2rem;
-  background: white;
-  box-shadow: $box-shadow-4;
-  border-radius: $base-border-radius;
-}
+  &__nav {
+    height: 5.4rem;
+  }
 
-.header nav a {
-  display: inline-block;
-  text-decoration: none;
-  font-weight: $font-weight-bold;
-  color: transparentize($color-primary, 0.5);
-  margin-right: 4rem;
-}
+  &__extended {
+    height: 2rem;
+    animation: slideInFromTop 0.2s ease-in-out 1;
+  }
 
-.header nav a:hover,
-.header nav a:active {
-  color: $color-primary;
-}
+  &__float {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: start;
+    align-items: center;
+    top: 0;
+    height: 6.5rem;
+    font-size: 1.75rem;
+    padding: 1rem 2rem;
+    background: white;
+    box-shadow: $box-shadow-4;
+    border-radius: $base-border-radius;
+    animation: fadeIn 0.2s ease-in-out 1;
+    & a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: $font-weight-bold;
+      color: transparentize($color-primary, 0.5);
+      margin-right: 4rem;
+    }
 
-.header nav a.active {
-  color: $color-primary;
+    & a:hover,
+    & a:active {
+      color: $color-primary;
+    }
+
+    & a.active {
+      color: $color-primary;
+    }
+  }
+  @keyframes slideInFromTop {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }

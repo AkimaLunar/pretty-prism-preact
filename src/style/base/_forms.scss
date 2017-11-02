@@ -9,8 +9,8 @@ input[type="url"],
 input[type="password"],
 textarea,
 select {
-  height: 38px;
-  padding: 6px 14px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  height: 2.5rem;
+  padding: 0.5rem 1rem; /* The 6px vertically centers text on FF, ignored by Webkit */
   background-color: #fff;
   border: $base-border;
   border-radius: $base-border-radius;
@@ -32,9 +32,9 @@ textarea {
   appearance: none;
 }
 textarea {
-  min-height: 65px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  min-height: 12rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 input[type="email"]:focus,
 input[type="number"]:focus,

@@ -1,5 +1,42 @@
 @import "../../style/base/variables";
 
 .polish {
-  padding: $view-padding;
+  &__image {
+    width: 100%;
+  }
+
+  &__footer {
+    padding: 1rem 1rem 0 1rem;
+  }
+
+  &__button,
+  &__textarea {
+    width: 100%;
+  }
+  &__textarea {
+    margin: 1rem 0;
+  }
+
+  &__info {
+    position: relative;
+    width: 100%;
+    top: -4rem;
+    height: 6.5rem;
+    font-size: 1.75rem;
+    padding: 0.5rem 2rem;
+    background: white;
+    box-shadow: $box-shadow-4;
+    border-radius: $base-border-radius;
+    color: $color-medium-grey;
+    & figure {
+      display: inline-block;
+    }
+  }
+
+  &__heading {
+    margin-top: 2rem;
+  }
+  &__comment {
+    margin: 0.5rem 0;
+  }
 }

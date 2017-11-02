@@ -6,17 +6,27 @@ export default class UserChip extends Component {
   constructor(props) {
     super(props);
   }
-  render(props) {
+  render({ user }) {
     return (
       <figure class={style.figure}>
-        <img src="http://i.pravatar.cc/34" class={style.avatar} />
-        <figcaption>&ensp;{props.user.username}</figcaption>
+        {user.avatar ? (
+          <img
+            src="http://i.pravatar.cc/34"
+            class={style.avatar}
+            alt={`${user.username} profile`}
+          />
+        ) : (
+          <div class={style.avatar}>&nbsp;</div>
+        )}
+        <figcaption>&ensp;{user.username}</figcaption>
       </figure>
     );
   }
 }
 
 UserChip.propTypes = {
-  username: PropTypes.string.isRequired,
-  avatar: PropTypes.string
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    avatar: PropTypes.string
+  })
 };

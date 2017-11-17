@@ -1,45 +1,44 @@
 import { h, Component } from 'preact';
 // import PropTypes from 'prop-types';
 import style from './style';
-
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import Item from '../item';
 
-export default class Feed extends Component {
+class Feed extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      feed: null,
-      loading: true
-    };
-  }
-  componentDidMount() {
-    // fetch(props.search)
-    fetch(
-      'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/70d066a16cd4fabd06c3e79d06ab5b9c8f1273e2/src/fake-items.json'
-    )
-      .then(res => res.json())
-      .then(feed =>
-        this.setState({
-          feed: feed.data,
-          loading: false
-        })
-      );
-
-    // TODO: Error handling
-    // .catch(err => console.error(err));
   }
 
-  render(props, { loading, feed }) {
+  render({ feedQuery }) {
     return (
       <div class={style.feed}>
-        {loading ? (
+        {feedQuery.loading ? (
           <p>Fetching the goodness...</p>
         ) : (
           <main class={style.grid}>
-            {feed.map(item => <Item item={item} key={item._id} />)}
+            {feedQuery.allPolishes.map(item => (
+              <Item item={item} key={item.id} />
+            ))}
           </main>
         )}
       </div>
     );
   }
 }
+
+const FEED_QUERY = gql`
+  query feedQuery {
+    allPolishes {
+      id
+      images
+      name
+      owners {
+        username
+        avatar
+      }
+    }
+  }
+`;
+
+export default graphql(FEED_QUERY, { name: 'feedQuery' })(Feed);

@@ -2,6 +2,9 @@ import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
 
+// import { graphql } from 'react-apollo';
+// import gql from 'graphql-tag';
+
 import Feed from '../../components/feed';
 
 export default class Profile extends Component {

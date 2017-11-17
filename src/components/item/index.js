@@ -13,7 +13,7 @@ export default class Item extends Component {
     return (
       <Link
         to={{
-          pathname: `/polish/${item._id}`,
+          pathname: `/polish/${item.id}`,
           state: {
             data: item
           }

@@ -11,7 +11,7 @@ export default class UserChip extends Component {
       <figure class={style.figure}>
         {user.avatar ? (
           <img
-            src="http://i.pravatar.cc/34"
+            src={user.avatar}
             class={style.avatar}
             alt={`${user.username} profile`}
           />

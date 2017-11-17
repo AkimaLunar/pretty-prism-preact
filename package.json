@@ -66,8 +66,12 @@
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
+    "apollo-client-preset": "^1.0.3",
     "classnames": "^2.2.5",
+    "graphql": "^0.11.7",
+    "graphql-tag": "^2.5.0",
     "linkstate": "^1.1.0",
+    "react-apollo": "^2.0.1",
     "react-router-dom": "^4.2.2"
   }
 }

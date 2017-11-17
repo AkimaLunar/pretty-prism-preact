@@ -2,40 +2,21 @@ import { h, Component } from 'preact';
 import style from './style';
 import linkState from 'linkstate';
 
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import UserChip from '../../components/userchip';
 import Username from '../../components/username';
 
-// TODO: Implement comments
-
-const COMMENTS = [
-  {
-    _id: '9489494949',
-    user: {
-      _id: '329574383',
-      username: 'mary.beeeee'
-    },
-    text: 'comment text here...',
-    timestamp: 'Sat Oct 28 2017 16:10:50 GMT-0700 (Pacific Daylight Time)'
-  },
-  {
-    _id: '48484626269595',
-    user: {
-      _id: '585837332',
-      username: 'rihanna88'
-    },
-    text: 'comment text there!',
-    timestamp: 'Sat Oct 28 2017 16:10:50 GMT-0700 (Pacific Daylight Time)'
-  }
-];
-export default class Polish extends Component {
+class Polish extends Component {
   constructor(props) {
     super(props);
     this.state = {
       comment: ''
     };
   }
-  render(props, state) {
-    let { images, owners } = props.location.state.data;
+  render({ gqlCommentsQuery, location }, state) {
+    let { images, owners } = location.state.data;
     // TODO: Add swipe element here
     return (
       <main>
@@ -53,11 +34,16 @@ export default class Polish extends Component {
             <h3 class={style.polish__heading}>
               <i class="twa twa--dancers" />&nbsp;Chatroom
             </h3>
-            {COMMENTS.map(comment => (
-              <p class={style.polish__comment} key={comment._id}>
-                <Username user={comment.user} /> {comment.text}
-              </p>
-            ))}
+            {gqlCommentsQuery.comments &&
+            gqlCommentsQuery.comments.length > 1 ? (
+                gqlCommentsQuery.comments.map(comment => (
+                  <p class={style.polish__comment} key={comment._id}>
+                    <Username user={comment.author} /> {comment.text}
+                  </p>
+                ))
+              ) : (
+                <p>No comments here yet. Do you have something nice to say?</p>
+              )}
           </section>
           <textarea
             type="text"
@@ -73,3 +59,24 @@ export default class Polish extends Component {
     );
   }
 }
+
+const COMMENTS_QUERY = gql`
+  query gqlCommentsQuery($polishId: String!) {
+    comments(polishId: $polishId) {
+      author {
+        username
+      }
+      text
+      timestamp
+    }
+  }
+`;
+
+export default graphql(COMMENTS_QUERY, {
+  name: 'gqlCommentsQuery',
+  options: ownProps => ({
+    variables: {
+      polishId: ownProps.location.state.data.id
+    }
+  })
+})(Polish);

@@ -16,12 +16,13 @@ const client = new ApolloClient({
 });
 
 // Components
-import Home from '../routes/home';
+import ActionButton from '../components/action-button';
 import Header from './header';
-import Profile from '../routes/profile';
+import Home from '../routes/home';
+import Login from '../routes/login';
 import Messages from '../routes/messages';
 import Polish from '../routes/polish';
-import ActionButton from '../components/action-button';
+import Profile from '../routes/profile';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
 
@@ -40,6 +41,7 @@ export default class App extends Component {
               <Route path="/profile/:user" component={Profile} />
               <Route path="/polish/:id" component={Polish} />
               <Route path="/messages/" component={Messages} />
+              <Route path="/login/" component={Login} />
               <Route component={Home} />
             </Switch>
             <ActionButton />

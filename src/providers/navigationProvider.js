@@ -1,4 +1,4 @@
-export default function navigationProvider(context) {
+export default function NavigationProvider(context) {
   const path = context.router.route.location.pathname;
   let data;
   context.router.route.location.state
@@ -23,6 +23,11 @@ export default function navigationProvider(context) {
   case /(^\/messages\/)/.test(path):
     return {
       title: 'Messages',
+      extended: false
+    };
+  case /(^\/login\/)/.test(path):
+    return {
+      title: 'Join the Squad!',
       extended: false
     };
   default:

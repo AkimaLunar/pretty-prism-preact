@@ -26,18 +26,26 @@ export default function Navigation(props) {
         )}
       </li>
       <li class={style.navigation__right}>
-        <Link
-          to={{
-            pathname: `/profile/${props.user.username}`,
-            state: {
-              data: props.user
-            }
-          }}
-          class={style.navigation__username}
-        >
-          {props.user.username}&ensp;
-          <Avatar user={props.user} online={true} />
-        </Link>
+        {this.props.user ? (
+          <Link
+            to={{
+              pathname: `/profile/${props.user.username}`,
+              state: {
+                data: props.user
+              }
+            }}
+            class={style.navigation__username}
+          >
+            {props.user.username}&ensp;
+            <Avatar user={props.user} online={true} />
+          </Link>
+        ) : (
+          <Link to="/login">
+            &nbsp;Login&ensp;|&ensp;<i
+              class={`${style.navigation__back} twa twa--key `}
+            />
+          </Link>
+        )}
       </li>
     </ul>
   );

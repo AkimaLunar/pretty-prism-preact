@@ -1,0 +1,22 @@
+@import "../../style/base/variables";
+
+.login {
+  @extend %normal-view;
+  @extend %normal-padding;
+  background: linear-gradient(180deg, #ffffff, $base-background-color);
+  background-image: url("https://pretty-prism.nyc3.digitaloceanspaces.com/assets/pattern-pink-squares.svg");
+  &__heading {
+    color: $color-secondary;
+    text-align: center;
+    font-size: 4rem;
+    padding: 1rem 2rem;
+    line-height: 4rem;
+  }
+  &__sublabel {
+    color: $color-medium-grey;
+  }
+
+  &__input {
+    width: 100%;
+  }
+}

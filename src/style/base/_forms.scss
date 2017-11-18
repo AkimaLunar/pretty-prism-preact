@@ -9,11 +9,11 @@ input[type="url"],
 input[type="password"],
 textarea,
 select {
-  height: 2.5rem;
-  padding: 0.5rem 1rem; /* The 6px vertically centers text on FF, ignored by Webkit */
+  height: 5.5rem;
+  padding: 2rem; /* The 6px vertically centers text on FF, ignored by Webkit */
   background-color: #fff;
-  border: $base-border;
-  border-radius: $base-border-radius;
+  border: none;
+  border-bottom: $base-border;
   box-shadow: none;
   box-sizing: border-box;
   transition: all $base-duration $base-timing;
@@ -53,6 +53,8 @@ legend {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 fieldset {
   padding: 0;

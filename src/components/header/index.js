@@ -18,7 +18,7 @@ export default class Header extends Component {
     if (AuthProvider.isUserAuthenticated())
       this.setState(() => {
         return {
-          // TODO: real ccallback here
+          // TODO: real callback here
           user: {
             _id: '000112233',
             username: 'user.name77',

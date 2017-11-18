@@ -33,7 +33,6 @@ export default class Messages extends Component {
   render(props, { loading, messages }) {
     return (
       <div class={style.messages}>
-        <h1>Messages</h1>
         {loading ? (
           <p>Fetching the goodness...</p>
         ) : (

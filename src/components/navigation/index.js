@@ -10,7 +10,9 @@ export default function Navigation(props) {
     <ul class={style.navigation}>
       <li class={style.navigation__left}>
         {this.props.data.extended ? (
-          <h1 class={style.navigation__logo}>PrettyPrism</h1>
+          <Link to="/">
+            <h1 class={style.navigation__logo}>PrettyPrism</h1>
+          </Link>
         ) : (
           <a
             onClick={e => {
@@ -40,7 +42,7 @@ export default function Navigation(props) {
             <Avatar user={props.user} online={true} />
           </Link>
         ) : (
-          <Link to="/login">
+          <Link to="/login/">
             &nbsp;Login&ensp;|&ensp;<i
               class={`${style.navigation__back} twa twa--key `}
             />

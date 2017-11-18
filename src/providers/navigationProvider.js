@@ -20,12 +20,12 @@ export default function NavigationProvider(context) {
       title: data.username,
       extended: false
     };
-  case /(^\/messages\/)/.test(path):
+  case /(^\/messages)(\/)?$/.test(path):
     return {
       title: 'Messages',
       extended: false
     };
-  case /(^\/login\/)/.test(path):
+  case /(^\/login)(\/)?$/.test(path):
     return {
       title: 'Join the Squad!',
       extended: false

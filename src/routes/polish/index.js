@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import style from './style';
 import linkState from 'linkstate';
+import { Link } from 'react-router-dom';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -23,7 +24,9 @@ class Polish extends Component {
         <img src={images[0]} class={style.polish__image} />
         <footer class={style.polish__footer}>
           <section class={style.polish__info}>
-            <UserChip user={owners[0]} />
+            <Link to={`/profile/${owners[0].username}`}>
+              <UserChip user={owners[0]} />
+            </Link>
             &nbsp;|&nbsp;swapped {owners.length - 1} times
           </section>
           <button class={`${style.polish__button} button button--primary`}>

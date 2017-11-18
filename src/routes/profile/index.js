@@ -1,22 +1,18 @@
 import { h, Component } from 'preact';
-import PropTypes from 'prop-types';
 import style from './style';
 
-// import { graphql } from 'react-apollo';
-// import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Feed from '../../components/feed';
 
-export default class Profile extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // TODO: API call >> setState >> get full user profile
-      user: props.location.state.data
-    };
+    this.state = {};
   }
-  render(props) {
-    let { avatar, username } = props.location.state.data;
+  render({ gqlUserQuery }) {
+    let { avatar, username } = gqlUserQuery;
     return (
       <div class={style.profile}>
         <main class={style.profile__main}>
@@ -47,6 +43,20 @@ export default class Profile extends Component {
   }
 }
 
-Profile.propTypes = {
-  location: PropTypes.object
-};
+const USER_QUERY = gql`
+  query gqlUserQuery($userId: String!) {
+    user(userId: $userId) {
+      username
+      avatar
+    }
+  }
+`;
+
+export default graphql(USER_QUERY, {
+  name: 'gqlUserQuery',
+  options: ownProps => ({
+    variables: {
+      userId: ownProps.match.params.username
+    }
+  })
+})(Profile);

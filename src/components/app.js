@@ -38,7 +38,7 @@ export default class App extends Component {
               <Route path="/filter/:filter" component={Home} />
               {/* TODO: Implement loggedInUser provider */}
               <Route path="/profile/" exact component={Profile} user="me" />
-              <Route path="/profile/:user" component={Profile} />
+              <Route path="/profile/:username" component={Profile} />
               <Route path="/polish/:id" component={Polish} />
               <Route path="/messages/" component={Messages} />
               <Route path="/login/" component={Login} />

@@ -6,7 +6,9 @@
   }
 
   &__footer {
-    padding: 1rem 1rem 0 1rem;
+    @extend %normal-padding;
+    padding-top: 0;
+    padding-bottom: 1rem;
   }
 
   &__button,

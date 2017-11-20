@@ -16,8 +16,15 @@ class Polish extends Component {
       comment: ''
     };
   }
-  render({ gqlCommentsQuery, location }, state) {
+  componentWillMount() {
+    // this.props.setPolish(this.props.gqlPolishQuery.polish);
+  }
+  componentWillUnmount() {
+    // this.props.setPolish(null);
+  }
+  render({ gqlPolishQuery, location }, state) {
     let { images, owners } = location.state.data;
+
     // TODO: Add swipe element here
     return (
       <main>
@@ -37,9 +44,9 @@ class Polish extends Component {
             <h3 class={style.polish__heading}>
               <i class="twa twa--dancers" />&nbsp;Chatroom
             </h3>
-            {gqlCommentsQuery.comments &&
-            gqlCommentsQuery.comments.length > 1 ? (
-                gqlCommentsQuery.comments.map(comment => (
+            {gqlPolishQuery.polish.comments &&
+            gqlPolishQuery.polish.comments.length > 1 ? (
+                gqlPolishQuery.polish.comments.map(comment => (
                   <p class={style.polish__comment} key={comment._id}>
                     <Username user={comment.author} /> {comment.text}
                   </p>
@@ -62,7 +69,26 @@ class Polish extends Component {
     );
   }
 }
-
+const POLISH_QUERY = gql`
+  query gqlPolishQuery($polishId: String!) {
+    polish(id: $polishId) {
+      id
+      name
+      images
+      owners {
+        username
+        avatar
+      }
+      comments {
+        author {
+          username
+        }
+        text
+        timestamp
+      }
+    }
+  }
+`;
 const COMMENTS_QUERY = gql`
   query gqlCommentsQuery($polishId: String!) {
     comments(polishId: $polishId) {
@@ -75,8 +101,8 @@ const COMMENTS_QUERY = gql`
   }
 `;
 
-export default graphql(COMMENTS_QUERY, {
-  name: 'gqlCommentsQuery',
+export default graphql(POLISH_QUERY, {
+  name: 'gqlPolishQuery',
   options: ownProps => ({
     variables: {
       polishId: ownProps.location.state.data.id

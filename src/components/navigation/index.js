@@ -31,10 +31,7 @@ export default function Navigation(props) {
         {this.props.user ? (
           <Link
             to={{
-              pathname: `/profile/${props.user.username}`,
-              state: {
-                data: props.user
-              }
+              pathname: '/profile/'
             }}
             class={style.navigation__username}
           >

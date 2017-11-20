@@ -4,6 +4,7 @@ import style from './style';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import NavigationProvider from '../../providers/NavigationProvider';
 import Feed from '../../components/feed';
 
 class Profile extends Component {
@@ -11,15 +12,46 @@ class Profile extends Component {
     super(props);
     this.state = {};
   }
-  render({ gqlUserQuery }) {
-    let { avatar, username } = gqlUserQuery;
+
+  logout() {
+    this.props.logout();
+    this.props.history.push('/');
+  }
+
+  render({ gqlUserQuery, self }) {
+    let settings = self ? (
+      <button onClick={() => this.logout()}>Sign out</button>
+    ) : (
+      ''
+    );
+    if (gqlUserQuery.loading) {
+      return (
+        <div class={style.profile}>
+          <main class={style.profile__main}>
+            <p>
+              Looking <i class="twa twa--eyes" />
+            </p>
+          </main>
+        </div>
+      );
+    }
+    if (!gqlUserQuery.userByUsername || gqlUserQuery.error) {
+      return (
+        <div class={style.profile}>
+          <main class={style.profile__main}>
+            <p>Doesn&rsquo;t seem like this user exists&hellip;</p>
+          </main>
+        </div>
+      );
+    }
     return (
       <div class={style.profile}>
         <main class={style.profile__main}>
+          {settings}
           <img
-            src={avatar}
+            src={gqlUserQuery.userByUsername.avatar}
             class={style.profile__avatar}
-            alt={`${username} profile`}
+            alt={`${gqlUserQuery.userByUsername.username} profile`}
           />
           <ul class={style.profile__info}>
             <li class={style.profile__left}>
@@ -30,6 +62,7 @@ class Profile extends Component {
 
           <Feed />
         </main>
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
@@ -44,8 +77,8 @@ class Profile extends Component {
 }
 
 const USER_QUERY = gql`
-  query gqlUserQuery($userId: String!) {
-    user(userId: $userId) {
+  query gqlUserQuery($username: String!) {
+    userByUsername(username: $username) {
       username
       avatar
     }
@@ -56,7 +89,7 @@ export default graphql(USER_QUERY, {
   name: 'gqlUserQuery',
   options: ownProps => ({
     variables: {
-      userId: ownProps.match.params.username
+      username: ownProps.match.params.username || ownProps.user.username
     }
   })
 })(Profile);

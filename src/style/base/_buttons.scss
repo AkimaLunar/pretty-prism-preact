@@ -59,3 +59,23 @@ input[type="reset"].button--primary:focus,
 input[type="button"].button--primary:focus {
   background-color: lighten($color-secondary, 5);
 }
+.button.button--secondary,
+button.button--secondary,
+input[type="submit"].button--secondary,
+input[type="reset"].button--secondary,
+input[type="button"].button--secondary {
+  color: #ffffff;
+  background-color: $color-primary;
+}
+.button.button--secondary:hover,
+button.button--secondary:hover,
+input[type="submit"].button--secondary:hover,
+input[type="reset"].button--secondary:hover,
+input[type="button"].button--secondary:hover,
+.button.button--secondary:focus,
+button.button--secondary:focus,
+input[type="submit"].button--secondary:focus,
+input[type="reset"].button--secondary:focus,
+input[type="button"].button--secondary:focus {
+  background-color: lighten($color-primary, 5);
+}

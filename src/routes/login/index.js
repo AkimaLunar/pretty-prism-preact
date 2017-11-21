@@ -45,10 +45,14 @@ class Login extends Component {
   }
 
   render(props, { newUser, error }) {
-    let headingClass = classNames({
+    const headingClass = classNames({
       [style.login__login]: !newUser,
       [style.login__signup]: newUser,
       [style.login__heading]: true
+    });
+    const buttonClass = classNames({
+      'button--secondary': !newUser,
+      'button--primary': newUser
     });
     return (
       <div class={style.login}>
@@ -73,12 +77,20 @@ class Login extends Component {
             class={style.login__input}
             onChange={linkState(this, 'password')}
           />
-          <button onClick={() => this.setState({ newUser: !newUser })}>
-            {this.state.newUser ? 'Already a member?' : 'Need a new account?'}
-          </button>
-          <button class="button button--primary" onClick={() => this.submit()}>
-            Submit
-          </button>
+          <div class={style.login__buttongroup}>
+            <button
+              class={`${style.login__button} button`}
+              onClick={() => this.setState({ newUser: !newUser })}
+            >
+              {this.state.newUser ? 'Already a member?' : 'Need a new account?'}
+            </button>
+            <button
+              class={`button ${style.login__button} ${buttonClass}`}
+              onClick={() => this.submit()}
+            >
+              Submit
+            </button>
+          </div>
         </form>
         <Circles on={newUser} class={style.login__svg} />
       </div>

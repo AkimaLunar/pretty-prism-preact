@@ -2,12 +2,13 @@ import { h, Component } from 'preact';
 import style from './style';
 import linkState from 'linkstate';
 import { Link } from 'react-router-dom';
+import { bind } from 'decko';
 
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import UserChip from '../../components/userchip';
-import Username from '../../components/username';
+import Comment from '../../components/comment';
 
 class Polish extends Component {
   constructor(props) {
@@ -17,8 +18,10 @@ class Polish extends Component {
       error: null
     };
   }
-  componentWillMount() {
-    // this.props.setPolish(this.props.gqlPolishQuery.polish);
+  componentWillReceiveProps(newProps) {
+    if (!newProps.gqlPolishQuery.loading) {
+      // this.props.setPolish(newProps.gqlPolishQuery.polish);
+    }
   }
   componentWillUnmount() {
     // this.props.setPolish(null);
@@ -32,9 +35,24 @@ class Polish extends Component {
         }
       })
       .then(() => {
-        this.setState(() => {
-          return { comment: '' };
-        });
+        this.setState({ comment: '' });
+        this.props.gqlPolishQuery.refetch();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  }
+
+  @bind
+  deleteComment(id) {
+    return this.props
+      .gqlDeleteCommentMutation({
+        variables: {
+          commentId: id
+        }
+      })
+      .then(() => {
+        this.props.gqlPolishQuery.refetch();
       })
       .catch(error => {
         this.setState({ error });
@@ -42,7 +60,7 @@ class Polish extends Component {
   }
   render({ gqlPolishQuery, user }, state) {
     let commentForm = user ? (
-      <form>
+      <form onSubmit={e => e.preventDefault()}>
         <textarea
           type="text"
           placeholder="Write kind comments here"
@@ -102,14 +120,17 @@ class Polish extends Component {
             </h3>
             {gqlPolishQuery.polish.comments &&
             gqlPolishQuery.polish.comments.length > 1 ? (
-                gqlPolishQuery.polish.comments.map(comment => (
-                  <p class={style.polish__comment} key={comment._id}>
-                    <Username user={comment.author} /> {comment.text}
-                  </p>
-                ))
-              ) : (
-                <p>No comments here yet. Do you have something nice to say?</p>
-              )}
+              gqlPolishQuery.polish.comments.map(comment => (
+                <Comment
+                  comment={comment}
+                  key={comment.id}
+                  self={comment.author.username === user.username}
+                  delete={this.deleteComment}
+                />
+              ))
+            ) : (
+              <p>No comments here yet. Do you have something nice to say?</p>
+            )}
             {commentForm}
           </section>
         </footer>
@@ -129,6 +150,7 @@ const POLISH_QUERY = gql`
         avatar
       }
       comments {
+        id
         author {
           username
         }
@@ -151,6 +173,14 @@ const CREATE_COMMENT_MUTATION = gql`
   }
 `;
 
+const DELETE_COMMENT_MUTATION = gql`
+  mutation gqlDeleteCommentMutation($commentId: ID!) {
+    deleteComment(id: $commentId) {
+      id
+    }
+  }
+`;
+
 export default compose(
   graphql(POLISH_QUERY, {
     name: 'gqlPolishQuery',
@@ -162,5 +192,8 @@ export default compose(
   }),
   graphql(CREATE_COMMENT_MUTATION, {
     name: 'gqlCreateComment'
+  }),
+  graphql(DELETE_COMMENT_MUTATION, {
+    name: 'gqlDeleteCommentMutation'
   })
 )(Polish);

@@ -24,7 +24,26 @@ class Polish extends Component {
   }
   render({ gqlPolishQuery, location }, state) {
     let { images, owners } = location.state.data;
-
+    if (gqlPolishQuery.loading) {
+      return (
+        <div class={style.profile}>
+          <main class={style.profile__main}>
+            <p>
+              Looking <i class="twa twa--eyes" />
+            </p>
+          </main>
+        </div>
+      );
+    }
+    if (!gqlPolishQuery.polish || gqlPolishQuery.error) {
+      return (
+        <div class={style.profile}>
+          <main class={style.profile__main}>
+            <p>Doesn&rsquo;t seem like this user exists&hellip;</p>
+          </main>
+        </div>
+      );
+    }
     // TODO: Add swipe element here
     return (
       <main>

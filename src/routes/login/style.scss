@@ -4,18 +4,32 @@
   @extend %normal-view;
   @extend %normal-padding;
   background: linear-gradient(180deg, #ffffff, $base-background-color);
-  background-image: url("https://pretty-prism.nyc3.digitaloceanspaces.com/assets/pattern-pink-squares.svg");
   &__heading {
-    color: $color-primary;
     text-align: center;
     font-size: 2rem;
     padding: 2rem 2rem 0 2rem;
   }
+  &__login {
+    color: $color-primary;
+  }
+  &__signup {
+    color: $color-secondary;
+  }
   &__sublabel {
-    color: $color-medium-grey;
+    color: $color-dark-grey;
   }
 
   &__input {
     width: 100%;
+  }
+  &__form {
+    z-index: 10;
+    position: relative;
+  }
+  &__svg {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }

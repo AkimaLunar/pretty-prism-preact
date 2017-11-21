@@ -41,7 +41,6 @@ import Polish from '../routes/polish';
 import Profile from '../routes/profile';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
-import Test from '../routes/test';
 
 export default class App extends Component {
   constructor(props) {
@@ -99,7 +98,6 @@ export default class App extends Component {
                 component={Login}
                 setUser={this.setUser}
               />
-              <PrivateRoute path="/test/" redirectTo="/" component={Test} />
               <Route component={Home} />
             </Switch>
             <ActionButton />

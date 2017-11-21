@@ -3,7 +3,7 @@ import style from './style';
 import linkState from 'linkstate';
 import { Link } from 'react-router-dom';
 
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import UserChip from '../../components/userchip';
@@ -13,7 +13,8 @@ class Polish extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: ''
+      comment: '',
+      error: null
     };
   }
   componentWillMount() {
@@ -22,8 +23,43 @@ class Polish extends Component {
   componentWillUnmount() {
     // this.props.setPolish(null);
   }
-  render({ gqlPolishQuery, location }, state) {
-    let { images, owners } = location.state.data;
+  comment() {
+    return this.props
+      .gqlCreateComment({
+        variables: {
+          polishId: this.props.match.params.id,
+          text: this.state.comment
+        }
+      })
+      .then(() => {
+        this.setState(() => {
+          return { comment: '' };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  }
+  render({ gqlPolishQuery, user }, state) {
+    let commentForm = user ? (
+      <form>
+        <textarea
+          type="text"
+          placeholder="Write kind comments here"
+          spellcheck="true"
+          class={style.polish__textarea}
+          value={state.comment}
+          onChange={linkState(this, 'comment')}
+        />
+        <button class={style.polish__button} onClick={() => this.comment()}>
+          comment
+        </button>
+      </form>
+    ) : (
+      <p>
+        <i class="twa twa--key" /> Log in to comment.
+      </p>
+    );
     if (gqlPolishQuery.loading) {
       return (
         <div class={style.profile}>
@@ -44,6 +80,7 @@ class Polish extends Component {
         </div>
       );
     }
+    const { images, owners } = gqlPolishQuery.polish;
     // TODO: Add swipe element here
     return (
       <main>
@@ -73,21 +110,14 @@ class Polish extends Component {
               ) : (
                 <p>No comments here yet. Do you have something nice to say?</p>
               )}
+            {commentForm}
           </section>
-          <textarea
-            type="text"
-            placeholder="Write kind comments here"
-            spellcheck="true"
-            class={style.polish__textarea}
-            value={state.comment}
-            onChange={linkState(this, 'comment')}
-          />
-          <button class={style.polish__button}>comment</button>
         </footer>
       </main>
     );
   }
 }
+
 const POLISH_QUERY = gql`
   query gqlPolishQuery($polishId: String!) {
     polish(id: $polishId) {
@@ -108,23 +138,29 @@ const POLISH_QUERY = gql`
     }
   }
 `;
-const COMMENTS_QUERY = gql`
-  query gqlCommentsQuery($polishId: String!) {
-    comments(polishId: $polishId) {
+
+const CREATE_COMMENT_MUTATION = gql`
+  mutation gqlCommentMutation($polishId: String!, $text: String!) {
+    createComment(polishId: $polishId, text: $text) {
+      text
+      timestamp
       author {
         username
       }
-      text
-      timestamp
     }
   }
 `;
 
-export default graphql(POLISH_QUERY, {
-  name: 'gqlPolishQuery',
-  options: ownProps => ({
-    variables: {
-      polishId: ownProps.location.state.data.id
-    }
+export default compose(
+  graphql(POLISH_QUERY, {
+    name: 'gqlPolishQuery',
+    options: ownProps => ({
+      variables: {
+        polishId: ownProps.match.params.id
+      }
+    })
+  }),
+  graphql(CREATE_COMMENT_MUTATION, {
+    name: 'gqlCreateComment'
   })
-})(Polish);
+)(Polish);

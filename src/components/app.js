@@ -91,6 +91,7 @@ export default class App extends Component {
                 path="/polish/:id"
                 component={Polish}
                 setPolish={this.setPolish}
+                user={currentUser}
               />
               <Route path="/messages/" component={Messages} />
               <PropsRoute

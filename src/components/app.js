@@ -14,8 +14,11 @@ import { ApolloClient, InMemoryCache } from 'apollo-client-preset';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from 'react-apollo';
+// const httpLink = createHttpLink({
+//   uri: 'http://api.prettyprism.com/graphql'
+// });
 const httpLink = createHttpLink({
-  uri: 'http://api.prettyprism.com/graphql'
+  uri: 'http://localhost:8282/graphql'
 });
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');

@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 // import PropTypes from 'prop-types';
 import style from './style';
 import linkState from 'linkstate';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
 class NewPolish extends Component {
@@ -16,36 +16,35 @@ class NewPolish extends Component {
       error: null
     };
   }
+  componentDidMount() {}
   upload(e) {
-    e.preventDefault();
-    if (this.state.image.length < 1) return;
+    console.log(signature);
+    // if (this.state.image.length < 1) return;
+    // let DOHeadears = new Headers();
+    // DOHeadears.append(
+    //   'Host',
+    //   'https://pretty-prism.nyc3.digitaloceanspaces.com'
+    // );
+    // DOHeadears.append('Authorization', 'public');
+    // DOHeadears.append('Content-Length', this.state.image.size);
+    // DOHeadears.append('x-amz-acl', 'public');
 
-    let DOHeadears = new Headers();
-    // TODO: add content length
-    DOHeadears.append('Authorization', 'public');
-    DOHeadears.append(
-      'Host',
-      'https://pretty-prism.nyc3.digitaloceanspaces.com'
-    );
-    DOHeadears.append('Content-Length', this.state.image.size);
-    DOHeadears.append('x-amz-acl', 'public');
-
-    const DOUploadRequest = new Request(
-      'https://pretty-prism.nyc3.digitaloceanspaces.com/UN4ZVHUZ7FGM5WNVMNWH',
-      {
-        method: 'PUT',
-        headers: DOHeadears,
-        mode: 'cors',
-        body: this.state.image
-      }
-    );
-    fetch(DOUploadRequest)
-      .then(response => {
-        this.setState({ response });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+    // const DOUploadRequest = new Request(
+    //   'https://pretty-prism.nyc3.digitaloceanspaces.com/UN4ZVHUZ7FGM5WNVMNWH',
+    //   {
+    //     method: 'PUT',
+    //     headers: DOHeadears,
+    //     mode: 'cors',
+    //     body: this.state.image
+    //   }
+    // );
+    // fetch(DOUploadRequest)
+    //   .then(response => {
+    //     this.setState({ response });
+    //   })
+    //   .catch(error => {
+    //     this.setState({ error });
+    //   });
   }
   imagePreview(e) {
     e.preventDefault();
@@ -130,6 +129,16 @@ const CREATE_POLISH_MUTATION = gql`
   }
 `;
 
-export default graphql(CREATE_POLISH_MUTATION, { name: 'gqlCreatePolish' })(
-  NewPolish
-);
+const S3_SIGN_MUTATION = gql`
+  mutation gqlS3SignMutation($filename: String!, $filetype: String!) {
+    signS3(filename: $filename, filetype: $filetype) {
+      url
+      signedRequest
+    }
+  }
+`;
+
+export default compose(
+  graphql(CREATE_POLISH_MUTATION, { name: 'gqlCreatePolish' }),
+  graphql(S3_SIGN_MUTATION, { name: 'gqlS3SignMutation' })
+)(NewPolish);

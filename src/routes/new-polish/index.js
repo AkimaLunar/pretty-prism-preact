@@ -4,6 +4,17 @@ import style from './style';
 import linkState from 'linkstate';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
+import moment from 'moment';
+
+const formatFilename = filename => {
+  const date = moment().format('YYYYMMDD');
+  const randomString = Math.random()
+    .toString(36)
+    .substring(2, 7);
+  const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, '-');
+  const newFilename = `images/${date}-${randomString}-${cleanFileName}`;
+  return newFilename.substring(0, 60);
+};
 
 class NewPolish extends Component {
   constructor(props) {
@@ -17,34 +28,34 @@ class NewPolish extends Component {
     };
   }
   componentDidMount() {}
-  upload(e) {
-    console.log(signature);
-    // if (this.state.image.length < 1) return;
-    // let DOHeadears = new Headers();
-    // DOHeadears.append(
-    //   'Host',
-    //   'https://pretty-prism.nyc3.digitaloceanspaces.com'
-    // );
-    // DOHeadears.append('Authorization', 'public');
-    // DOHeadears.append('Content-Length', this.state.image.size);
-    // DOHeadears.append('x-amz-acl', 'public');
 
-    // const DOUploadRequest = new Request(
-    //   'https://pretty-prism.nyc3.digitaloceanspaces.com/UN4ZVHUZ7FGM5WNVMNWH',
-    //   {
-    //     method: 'PUT',
-    //     headers: DOHeadears,
-    //     mode: 'cors',
-    //     body: this.state.image
-    //   }
-    // );
-    // fetch(DOUploadRequest)
-    //   .then(response => {
-    //     this.setState({ response });
-    //   })
-    //   .catch(error => {
-    //     this.setState({ error });
-    //   });
+  uploadToDO(file, signedRequest) {
+    const options = {
+      headers: {
+        'Content-Type': file.type
+      }
+    };
+    axios.put(signedRequest, file, options);
+  }
+  upload() {
+    const { name, image } = this.state;
+    let _response;
+    this.props
+      .gqlS3Sign({
+        filename: formatFilename(image.name),
+        fileformat: image.type
+      })
+      .then(response => {
+        this.setState({ response: response.data.gqlS3Sign });
+        return response.data.gqlS3Sign;
+      })
+      .then(response => {
+        const { signedRequest, url } = response;
+        this.uploadToDO(signedRequest);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
   }
   imagePreview(e) {
     e.preventDefault();
@@ -130,7 +141,7 @@ const CREATE_POLISH_MUTATION = gql`
 `;
 
 const S3_SIGN_MUTATION = gql`
-  mutation gqlS3SignMutation($filename: String!, $filetype: String!) {
+  mutation gqlS3Sign($filename: String!, $filetype: String!) {
     signS3(filename: $filename, filetype: $filetype) {
       url
       signedRequest
@@ -140,5 +151,5 @@ const S3_SIGN_MUTATION = gql`
 
 export default compose(
   graphql(CREATE_POLISH_MUTATION, { name: 'gqlCreatePolish' }),
-  graphql(S3_SIGN_MUTATION, { name: 'gqlS3SignMutation' })
+  graphql(S3_SIGN_MUTATION, { name: 'gqlS3Sign' })
 )(NewPolish);

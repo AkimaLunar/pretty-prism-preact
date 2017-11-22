@@ -13,16 +13,17 @@
   left: 0;
 }
 %cls {
-  opacity: 0.3;
   // fill: $color-secondary;
   fill: linear-gradient(180deg, $color-accent, $base-background-color);
   animation-iteration-count: infinite;
   transition: fill 0.25s ease-in-out;
 }
 .cls__login {
+  opacity: 0.3;
   fill: $color-lilac;
 }
 .cls__signup {
+  opacity: 0.8;
   fill: $color-accent;
 }
 .cls__1 {

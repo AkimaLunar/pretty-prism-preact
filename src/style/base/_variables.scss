@@ -37,7 +37,7 @@ $color-accent: map-get($accent-colors, accent);
 $color-green: #42f4a1;
 // Greys
 $grey-colors: (
-  x-light : #f5f5fa,
+  x-light : #eff0f2,
   light : #d4dce7,
   medium : #b9c0cd,
   dark : #8d96a6,
@@ -56,7 +56,7 @@ $brand-colors: (twitter : $color-twitter, facebook : $color-facebook);
 $base-font-color: $color-x-dark-grey;
 $action-color: $color-primary;
 // Border
-$base-border-color: $color-light-grey;
+$base-border-color: $color-medium-grey;
 $base-border: 1px solid $base-border-color;
 // Background Colors
 $base-background-color: $color-x-light-grey;

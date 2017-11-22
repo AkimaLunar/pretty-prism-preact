@@ -37,6 +37,7 @@ import Header from './header';
 import Home from '../routes/home';
 import Login from '../routes/login';
 import Messages from '../routes/messages';
+import NewPolish from '../routes/new-polish';
 import Polish from '../routes/polish';
 import Profile from '../routes/profile';
 // import Home from 'async!./home';
@@ -85,6 +86,11 @@ export default class App extends Component {
                 component={Profile}
                 self="true"
                 logout={this.logout}
+              />
+              <PrivateRoute
+                path="/new-polish"
+                component={NewPolish}
+                redirectTo="/"
               />
               <PropsRoute path="/profile/:username" component={Profile} />
               <PropsRoute

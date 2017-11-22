@@ -59,20 +59,26 @@ class Login extends Component {
         <h4 class={headingClass}>{this.state.newUser ? 'Sign Up' : 'Login'}</h4>
         {error ? error.message : ''}
         <form onSubmit={e => e.preventDefault()} class={style.login__form}>
-          <label class={style.login__label}>username</label>
+          <label class={style.login__label} for="username">
+            username
+          </label>
           <p class={style.login__sublabel}>
             What is your super-sassy-hero name?
           </p>
           <input
+            id="username"
             type="text"
             class={style.login__input}
             onChange={linkState(this, 'username')}
           />
-          <label class={style.login__label}>password</label>
+          <label class={style.login__label} for="password">
+            password
+          </label>
           <p class={style.login__sublabel}>
             Choose a super safe secret passphrase, like VivaciousP@nd@!
           </p>
           <input
+            id="password"
             type="password"
             class={style.login__input}
             onChange={linkState(this, 'password')}

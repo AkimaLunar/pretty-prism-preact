@@ -37,13 +37,13 @@ input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
   outline: 0;
-  box-shadow: $box-shadow-4;
 }
 .button.button--primary,
 button.button--primary,
 input[type="submit"].button--primary,
 input[type="reset"].button--primary,
 input[type="button"].button--primary {
+  box-shadow: $box-shadow-4;
   color: $color-accent;
   background-color: $color-secondary;
 }
@@ -64,6 +64,7 @@ button.button--secondary,
 input[type="submit"].button--secondary,
 input[type="reset"].button--secondary,
 input[type="button"].button--secondary {
+  box-shadow: $box-shadow-4;
   color: #ffffff;
   background-color: $color-primary;
 }

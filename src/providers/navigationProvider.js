@@ -13,6 +13,11 @@ class NavigationProvider {
         title: 'Polish',
         extended: false
       };
+    case /(^\/new-polish)(\/)?$/.test(path):
+      return {
+        title: 'New polish',
+        extended: false
+      };
     case /(^\/profile\/)/.test(path):
       return {
         title: path.replace(/(^\/profile\/)/, ''),

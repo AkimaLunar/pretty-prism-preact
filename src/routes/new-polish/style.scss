@@ -1,0 +1,62 @@
+@import "../../style/base/variables";
+
+.newpolish {
+  @extend %normal-view;
+  @extend %normal-padding;
+  &__heading {
+    text-align: center;
+    font-size: 2rem;
+    padding: 2rem 2rem 0 2rem;
+    color: $color-primary;
+  }
+  &__input {
+    width: 100%;
+  }
+  &__upload {
+    position: relative;
+    margin-bottom: 2rem;
+    &__label {
+      height: 5.5rem;
+      padding: 0 2rem;
+      color: $color-secondary;
+      background-color: white;
+      text-align: center;
+      font-size: 11px;
+      font-family: $heading-font-family;
+      font-weight: $font-weight-bold;
+      line-height: 5.5rem;
+      letter-spacing: 0.2rem;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      border-radius: $base-border-radius;
+      border: 1px solid $color-secondary;
+      cursor: pointer;
+      i {
+        font-size: 200%;
+      }
+    }
+    &__remove {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      height: 4rem;
+      width: 4rem;
+      font-family: $heading-font-family;
+      font-weight: $font-weight-bold;
+      line-height: 4rem;
+      text-align: center;
+      background-color: white;
+      border-radius: 50%;
+      box-shadow: $box-shadow-4;
+    }
+    &__input {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+}

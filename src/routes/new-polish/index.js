@@ -6,16 +6,6 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
 
-const formatFilename = filename => {
-  const date = moment().format('YYYYMMDD');
-  const randomString = Math.random()
-    .toString(36)
-    .substring(2, 7);
-  const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, '-');
-  const newFilename = `images/${date}-${randomString}-${cleanFileName}`;
-  return newFilename.substring(0, 60);
-};
-
 class NewPolish extends Component {
   constructor(props) {
     super(props);
@@ -27,31 +17,38 @@ class NewPolish extends Component {
       error: null
     };
   }
-  componentDidMount() {}
+  componentDidMount() { }
 
-  uploadToDO(file, signedRequest) {
-    const options = {
-      headers: {
-        'Content-Type': file.type
-      }
-    };
-    axios.put(signedRequest, file, options);
+  formatFilename(filename) {
+    const date = moment().format('YYYYMMDD');
+    const randomString = Math.random()
+      .toString(36)
+      .substring(2, 7);
+    const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, '-');
+    const newFilename = `images/${date}-${randomString}-${cleanFileName}`;
+    return newFilename.substring(0, 60);
   }
-  upload() {
+
+  upload(e) {
+    e.preventDefault();
     const { name, image } = this.state;
-    let _response;
+    const _image = {
+      name: this.formatFilename(image.name),
+      type: image.type,
+      size: image.size
+    };
+    console.log(this.formatFilename(image.name));
     this.props
       .gqlS3Sign({
-        filename: formatFilename(image.name),
-        fileformat: image.type
+        variables: {
+          filename: _image.name,
+          image: _image
+        }
       })
       .then(response => {
+        console.log(JSON.stringify(response, '', 2));
         this.setState({ response: response.data.gqlS3Sign });
         return response.data.gqlS3Sign;
-      })
-      .then(response => {
-        const { signedRequest, url } = response;
-        this.uploadToDO(signedRequest);
       })
       .catch(error => {
         this.setState({ error });
@@ -88,20 +85,20 @@ class NewPolish extends Component {
         <img src={imagePreviewUrl} class={style.newpolish__input} />
       </div>
     ) : (
-      <div class={style.newpolish__upload}>
-        <label for="image" class={style.newpolish__upload__label}>
-          <i class="twa twa--nail-care" />&nbsp;Pick an image
+        <div class={style.newpolish__upload}>
+          <label for="image" class={style.newpolish__upload__label}>
+            <i class="twa twa--nail-care" />&nbsp;Pick an image
         </label>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          capture="camera"
-          class={style.newpolish__upload__input}
-          onChange={e => this.imagePreview(e)}
-        />
-      </div>
-    );
+          <input
+            type="file"
+            id="image"
+            accept="image/*"
+            capture="camera"
+            class={style.newpolish__upload__input}
+            onChange={e => this.imagePreview(e)}
+          />
+        </div>
+      );
     return (
       <div class={style.newpolish}>
         <h4 class={style.newpolish__heading}>Add that new color</h4>
@@ -141,10 +138,10 @@ const CREATE_POLISH_MUTATION = gql`
 `;
 
 const S3_SIGN_MUTATION = gql`
-  mutation gqlS3Sign($filename: String!, $filetype: String!) {
-    signS3(filename: $filename, filetype: $filetype) {
+  mutation gqlS3Sign($image: Image!) {
+    signS3(image: $image) {
       url
-      signedRequest
+      signature
     }
   }
 `;

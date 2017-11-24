@@ -10,57 +10,44 @@ class NewPolish extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: '',
-      imagePreviewUrl: '',
       name: '',
-      response: null,
+      images: [],
+      imageToUpload: '',
+      imagePreviewUrl: '',
       error: null
     };
-  }
-  componentDidMount() { }
-
-  formatFilename(filename) {
-    const date = moment().format('YYYYMMDD');
-    const randomString = Math.random()
-      .toString(36)
-      .substring(2, 7);
-    const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, '-');
-    const newFilename = `images/${date}-${randomString}-${cleanFileName}`;
-    return newFilename.substring(0, 60);
   }
 
   upload(e) {
     e.preventDefault();
-    const { name, image } = this.state;
-    const _image = {
-      name: this.formatFilename(image.name),
-      type: image.type,
-      size: image.size
-    };
-    console.log(this.formatFilename(image.name));
     this.props
-      .gqlS3Sign({
+      .gqlUploadImage({
         variables: {
-          filename: _image.name,
-          image: _image
+          upload: this.state.imageToUpload,
+          size: this.state.imageToUpload.size
         }
       })
       .then(response => {
-        console.log(JSON.stringify(response, '', 2));
-        this.setState({ response: response.data.gqlS3Sign });
-        return response.data.gqlS3Sign;
+        const url = response.data.uploadImage.url;
+        this.setState(prevState => ({
+          images: [...prevState.images, url],
+          imageToUpload: '',
+          imagePreviewUrl: ''
+        }));
       })
       .catch(error => {
         this.setState({ error });
+        console.log(JSON.stringify(error));
       });
   }
+
   imagePreview(e) {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
     reader.onloadend = () => {
       this.setState({
-        image: file,
+        imageToUpload: file,
         imagePreviewUrl: reader.result
       });
     };
@@ -69,12 +56,30 @@ class NewPolish extends Component {
   imageClear(e) {
     e.preventDefault();
     this.setState({
-      image: '',
+      imageToUpload: '',
       imagePreviewUrl: ''
     });
   }
+  createPolish(e) {
+    e.preventDefault();
+    this.props
+      .gqlCreatePolish({
+        variables: {
+          name: this.state.name,
+          images: this.state.images
+        }
+      })
+      .then(response => {
+        const id = response.data.createPolish.id;
+        this.props.history.push(`/polish/${id}`);
+      })
+      .catch(error => {
+        this.setState({ error });
+        console.log(JSON.stringify(error));
+      });
+  }
   render(props, { imagePreviewUrl }) {
-    let imageUploder = imagePreviewUrl ? (
+    const imageUploder = imagePreviewUrl ? (
       <div class={style.newpolish__upload}>
         <span
           onClick={e => this.imageClear(e)}
@@ -83,22 +88,39 @@ class NewPolish extends Component {
           x
         </span>
         <img src={imagePreviewUrl} class={style.newpolish__input} />
+        <button
+          type="submit"
+          class={`button button--secondary ${style.newpolish__input}`}
+        >
+          Add this pic
+        </button>
       </div>
     ) : (
-        <div class={style.newpolish__upload}>
-          <label for="image" class={style.newpolish__upload__label}>
-            <i class="twa twa--nail-care" />&nbsp;Pick an image
+      <div class={style.newpolish__upload}>
+        <label for="image" class={style.newpolish__upload__label}>
+          <i class="twa twa--nail-care" />&nbsp;Pick an image
         </label>
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            capture="camera"
-            class={style.newpolish__upload__input}
-            onChange={e => this.imagePreview(e)}
-          />
-        </div>
-      );
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          capture="camera"
+          class={style.newpolish__upload__input}
+          onChange={e => this.imagePreview(e)}
+        />
+      </div>
+    );
+    const gallery = this.state.images.map((url, i) => (
+      <img src={url} key={`image-${i}`} alt={`New polish pic ${i}`} />
+    ));
+    const createPolish = (
+      <button
+        class={`button button--primary ${style.newpolish__input}`}
+        onClick={e => this.createPolish(e)}
+      >
+        Upload the polish!
+      </button>
+    );
     return (
       <div class={style.newpolish}>
         <h4 class={style.newpolish__heading}>Add that new color</h4>
@@ -116,13 +138,9 @@ class NewPolish extends Component {
             class={style.newpolish__input}
             onChange={linkState(this, 'name')}
           />
+          {gallery}
           {imageUploder}
-          <button
-            type="submit"
-            class={`button button--secondary ${style.newpolish__input}`}
-          >
-            Upload image
-          </button>
+          {createPolish}
         </form>
       </div>
     );
@@ -137,16 +155,15 @@ const CREATE_POLISH_MUTATION = gql`
   }
 `;
 
-const S3_SIGN_MUTATION = gql`
-  mutation gqlS3Sign($image: Image!) {
-    signS3(image: $image) {
+const UPLOAD_IMAGE_MUTATION = gql`
+  mutation gqlUploadImage($upload: Upload!, $size: String!) {
+    uploadImage(upload: $upload, size: $size) {
       url
-      signature
     }
   }
 `;
 
 export default compose(
   graphql(CREATE_POLISH_MUTATION, { name: 'gqlCreatePolish' }),
-  graphql(S3_SIGN_MUTATION, { name: 'gqlS3Sign' })
+  graphql(UPLOAD_IMAGE_MUTATION, { name: 'gqlUploadImage' })
 )(NewPolish);

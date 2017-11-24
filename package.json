@@ -68,6 +68,7 @@
   "dependencies": {
     "apollo-client-preset": "^1.0.3",
     "apollo-link-context": "^1.0.1",
+    "apollo-upload-client": "^7.0.0-alpha.1",
     "aws-sdk": "^2.155.0",
     "classnames": "^2.2.5",
     "decko": "^1.2.0",

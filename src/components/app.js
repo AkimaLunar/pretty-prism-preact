@@ -14,12 +14,12 @@ import { ApolloClient, InMemoryCache } from 'apollo-client-preset';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from 'react-apollo';
-// const httpLink = createHttpLink({
-//   uri: 'http://api.prettyprism.com/graphql'
-// });
-const httpLink = createHttpLink({
+import { createUploadLink } from 'apollo-upload-client';
+const link = createUploadLink({
   uri: 'http://localhost:8282/graphql'
+  // uri: 'http://api.prettyprism.com/graphql'
 });
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
   return {
@@ -30,7 +30,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(link),
   cache: new InMemoryCache()
 });
 

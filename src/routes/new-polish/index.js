@@ -78,7 +78,7 @@ class NewPolish extends Component {
         console.log(JSON.stringify(error));
       });
   }
-  render(props, { imagePreviewUrl }) {
+  render(props, { imagePreviewUrl, name, images }) {
     const imageUploder = imagePreviewUrl ? (
       <div class={style.newpolish__upload}>
         <span
@@ -87,7 +87,7 @@ class NewPolish extends Component {
         >
           x
         </span>
-        <img src={imagePreviewUrl} class={style.newpolish__input} />
+        <img src={imagePreviewUrl} class={style.newpolish__upload__preview} />
         <button
           type="submit"
           class={`button button--secondary ${style.newpolish__input}`}
@@ -97,9 +97,6 @@ class NewPolish extends Component {
       </div>
     ) : (
       <div class={style.newpolish__upload}>
-        <label for="image" class={style.newpolish__upload__label}>
-          <i class="twa twa--nail-care" />&nbsp;Pick an image
-        </label>
         <input
           type="file"
           id="image"
@@ -111,21 +108,29 @@ class NewPolish extends Component {
       </div>
     );
     const gallery = this.state.images.map((url, i) => (
-      <img src={url} key={`image-${i}`} alt={`New polish pic ${i}`} />
+      <img
+        class={style.newpolish__thumbnail}
+        src={url}
+        key={`image-${i}`}
+        alt={`New polish pic ${i}`}
+      />
     ));
-    const createPolish = (
-      <button
-        class={`button button--primary ${style.newpolish__input}`}
-        onClick={e => this.createPolish(e)}
-      >
-        Upload the polish!
-      </button>
-    );
+    const createPolish =
+      name.length >= 1 && images.length >= 1 ? (
+        <button
+          class={`button button--primary ${style.newpolish__input}`}
+          onClick={e => this.createPolish(e)}
+        >
+          Upload the polish!
+        </button>
+      ) : (
+        ''
+      );
     return (
       <div class={style.newpolish}>
         <h4 class={style.newpolish__heading}>Add that new color</h4>
         <form onSubmit={e => this.upload(e)}>
-          <label class={style.login__label} for="name">
+          <label class={style.newpolish__label} for="name">
             name
           </label>
           <p>
@@ -136,11 +141,18 @@ class NewPolish extends Component {
             id="name"
             type="text"
             class={style.newpolish__input}
+            placeholder="ex. Dusty Unicorn at Dawn"
             onChange={linkState(this, 'name')}
           />
-          {gallery}
-          {imageUploder}
+          <div class={style.newpolish__gallery}>
+            <label for="image" class={style.newpolish__upload__label}>
+              <i class="twa twa--camera" />
+              <br />Add an<br />image
+            </label>
+            {gallery}
+          </div>
           {createPolish}
+          {imageUploder}
         </form>
       </div>
     );

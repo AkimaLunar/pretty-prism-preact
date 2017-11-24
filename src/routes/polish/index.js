@@ -119,7 +119,7 @@ class Polish extends Component {
               <i class="twa twa--dancers" />&nbsp;Chatroom
             </h3>
             {gqlPolishQuery.polish.comments &&
-            gqlPolishQuery.polish.comments.length > 1 ? (
+            gqlPolishQuery.polish.comments.length >= 1 ? (
               gqlPolishQuery.polish.comments.map(comment => (
                 <Comment
                   comment={comment}

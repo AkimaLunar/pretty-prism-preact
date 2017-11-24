@@ -1,6 +1,7 @@
 @import "../../style/base/variables";
 
 .polish {
+  @extend %normal-view;
   &__image {
     width: 100%;
   }

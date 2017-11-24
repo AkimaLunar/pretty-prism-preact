@@ -101,7 +101,7 @@ class Polish extends Component {
     const { images, owners } = gqlPolishQuery.polish;
     // TODO: Add swipe element here
     return (
-      <main>
+      <main class={style.polish}>
         <img src={images[0]} class={style.polish__image} />
         <footer class={style.polish__footer}>
           <section class={style.polish__info}>

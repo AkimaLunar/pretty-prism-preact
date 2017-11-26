@@ -35,6 +35,7 @@ $color-primary: map-get($accent-colors, primary);
 $color-secondary: map-get($accent-colors, secondary);
 $color-accent: map-get($accent-colors, accent);
 $color-green: #42f4a1;
+$color-red: #f44141;
 // Greys
 $grey-colors: (
   x-light : #eff0f2,
@@ -51,7 +52,10 @@ $color-x-light-grey: map-get($grey-colors, x-light);
 // Brand Colors
 $color-twitter: #00aced;
 $color-facebook: #3b5998;
-$brand-colors: (twitter : $color-twitter, facebook : $color-facebook);
+$brand-colors: (
+  twitter : $color-twitter,
+  facebook : $color-facebook
+);
 // Font Colors
 $base-font-color: $color-x-dark-grey;
 $action-color: $color-primary;

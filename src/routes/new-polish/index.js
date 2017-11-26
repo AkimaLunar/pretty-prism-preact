@@ -4,7 +4,6 @@ import style from './style';
 import linkState from 'linkstate';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import moment from 'moment';
 
 class NewPolish extends Component {
   constructor(props) {

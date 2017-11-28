@@ -3,6 +3,7 @@ import style from './style';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import Link from 'react-router-dom/Link';
 
 import Feed from '../../components/feed';
 class Home extends Component {
@@ -13,7 +14,20 @@ class Home extends Component {
     };
   }
 
-  render({ data }) {
+  render({ data, match }) {
+    const { filter } = match.params;
+    let message = '';
+    if (filter === 'nearby') {
+      message = <p>Explore polishes nearby!</p>;
+    }
+    if (filter === 'your-collection') {
+      message = (
+        <Link class="button" to="/new-polish/">
+          + Upload a polish
+        </Link>
+      );
+    }
+
     if (data.loading) {
       return (
         <div class={style.home}>
@@ -35,6 +49,7 @@ class Home extends Component {
     }
     return (
       <div class={style.home}>
+        {message}
         <Feed polishes={data.polishes} />
       </div>
     );

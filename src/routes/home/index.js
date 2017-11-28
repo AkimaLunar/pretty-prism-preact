@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import style from './style';
 
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import Feed from '../../components/feed';
@@ -13,8 +13,8 @@ class Home extends Component {
     };
   }
 
-  render({ gqlFeed }) {
-    if (gqlFeed.loading) {
+  render({ data }) {
+    if (data.loading) {
       return (
         <div class={style.home}>
           <p>
@@ -23,24 +23,27 @@ class Home extends Component {
         </div>
       );
     }
-    if (gqlFeed.error) {
+    if (data.error) {
       return (
         <div class={style.home}>
-          <p>Oopsy daisies&hellip; Something went wrong! Try again.</p>
+          <p>
+            <i class="twa twa--scream" /> Oopsy daisies&hellip; Something went
+            wrong! Try again.
+          </p>
         </div>
       );
     }
     return (
       <div class={style.home}>
-        <Feed polishes={gqlFeed.allPolishes} />
+        <Feed polishes={data.polishes} />
       </div>
     );
   }
 }
 
 const FEED_QUERY = gql`
-  query gqlFeed {
-    allPolishes {
+  query gqlFeed($filter: String) {
+    polishes(filter: $filter) {
       id
       images
       name
@@ -52,4 +55,10 @@ const FEED_QUERY = gql`
   }
 `;
 
-export default graphql(FEED_QUERY, { name: 'gqlFeed' })(Home);
+export default graphql(FEED_QUERY, {
+  options: ownProps => ({
+    variables: {
+      filter: ownProps.match.params.filter
+    }
+  })
+})(Home);

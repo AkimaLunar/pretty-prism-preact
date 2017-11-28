@@ -10,52 +10,39 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
-      following: true
+      user: null
     };
   }
-
   logout() {
     this.props.logout();
     this.props.history.push('/');
   }
 
   follow() {
-    this.props.gqlFollow({
-      variables: {
-        userToFollowId: this.props.gqlUserQuery.userByUsername.id
-      }
-    });
+    this.props
+      .gqlFollow({
+        variables: {
+          userToFollowId: this.props.gqlUserQuery.userByUsername.id
+        }
+      })
+      // TODO: THIS IS REALLY SHITTY
+      .then(() => window.location.reload())
+      .catch(err => console.log(err));
   }
 
   unfollow() {
-    this.props.gqlUnfollow({
-      variables: {
-        userToFollowId: this.props.gqlUserQuery.userByUsername.id
-      }
-    });
+    this.props
+      .gqlUnfollow({
+        variables: {
+          userToFollowId: this.props.gqlUserQuery.userByUsername.id
+        }
+      })
+      // TODO: THIS IS REALLY SHITTY
+      .then(() => window.location.reload())
+      .catch(err => console.log(err));
   }
 
-  render({ gqlUserQuery, self }, { following }) {
-    const settings = self ? (
-      <button class={style.profile__button} onClick={() => this.logout()}>
-        Sign out
-      </button>
-    ) : following ? (
-      <button
-        class={`button button--danger ${style.profile__button}`}
-        onClick={() => this.unfollow()}
-      >
-        Unfollow
-      </button>
-    ) : (
-      <button
-        class={`button button--secondary ${style.profile__button}`}
-        onClick={() => this.follow()}
-      >
-        Follow
-      </button>
-    );
+  render({ gqlUserQuery, self, following }) {
     if (gqlUserQuery.loading) {
       return (
         <div class={style.profile}>
@@ -76,6 +63,28 @@ class Profile extends Component {
         </div>
       );
     }
+    const _following =
+      following && following.indexOf(gqlUserQuery.userByUsername.id) !== -1;
+    const settings = self ? (
+      <button class={style.profile__button} onClick={() => this.logout()}>
+        Sign out
+      </button>
+    ) : _following ? (
+      <button
+        class={`button button--danger ${style.profile__button}`}
+        onClick={() => this.unfollow()}
+      >
+        Unfollow
+      </button>
+    ) : (
+      <button
+        class={`button button--secondary ${style.profile__button}`}
+        onClick={() => this.follow()}
+      >
+        Follow
+      </button>
+    );
+
     return (
       <div class={style.profile}>
         <main class={style.profile__main}>

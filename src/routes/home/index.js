@@ -22,7 +22,10 @@ class Home extends Component {
     }
     if (filter === 'your-collection') {
       message = (
-        <Link class="button" to="/new-polish/">
+        <Link
+          class={`button button--secondary ${style.home__input}`}
+          to="/new-polish/"
+        >
           + Upload a polish
         </Link>
       );

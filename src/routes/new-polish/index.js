@@ -4,7 +4,6 @@ import style from './style';
 import linkState from 'linkstate';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import moment from 'moment';
 
 class NewPolish extends Component {
   constructor(props) {
@@ -96,17 +95,17 @@ class NewPolish extends Component {
         </button>
       </div>
     ) : (
-      <div class={style.newpolish__upload}>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          capture="camera"
-          class={style.newpolish__upload__input}
-          onChange={e => this.imagePreview(e)}
-        />
-      </div>
-    );
+        <div class={style.newpolish__upload}>
+          <input
+            type="file"
+            id="image"
+            accept="image/*"
+            capture="camera"
+            class={style.newpolish__upload__input}
+            onChange={e => this.imagePreview(e)}
+          />
+        </div>
+      );
     const gallery = this.state.images.map((url, i) => (
       <img
         class={style.newpolish__thumbnail}
@@ -124,8 +123,8 @@ class NewPolish extends Component {
           Upload the polish!
         </button>
       ) : (
-        ''
-      );
+          ''
+        );
     return (
       <div class={style.newpolish}>
         <h4 class={style.newpolish__heading}>Add that new color</h4>

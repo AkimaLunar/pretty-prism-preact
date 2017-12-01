@@ -23,7 +23,7 @@
     margin-bottom: 1rem;
     padding: 1rem 0;
     padding-left: 1rem;
-    background-color: $color-medium-grey;
+    background-color: transparentize($color-light-grey, .5);
     height: 10rem;
     overflow-x: scroll;
     overflow-y: hidden;

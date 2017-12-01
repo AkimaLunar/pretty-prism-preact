@@ -24,6 +24,10 @@
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
     border-radius: 50%;
   }
+  &__button {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
   &__info {
     list-style: none;
     margin: 0;

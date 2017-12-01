@@ -14,6 +14,8 @@ import { ApolloClient, InMemoryCache } from 'apollo-client-preset';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { createUploadLink } from 'apollo-upload-client';
 const link = createUploadLink({
   uri: 'http://localhost:8282/graphql'
@@ -51,16 +53,37 @@ export default class App extends Component {
     super(props);
     this.state = {
       currentUser: null,
-      currentPolish: null
+      currentPolish: null,
+      following: []
     };
   }
+
   @bind
   setPolish(polish) {
     this.setState({ currentPolish: polish });
   }
+
   @bind
   setUser(user) {
     this.setState({ currentUser: user });
+    this.setFollowing();
+  }
+
+  @bind
+  setFollowing() {
+    const { currentUser } = this.state;
+    const following = client
+      .query({
+        query: FOLLOWING_QUERY,
+        variables: { id: currentUser.id }
+      })
+      .then(response => {
+        const following = response.data.userById.following.map(user => user.id);
+        console.log(`setFollowing() is running
+      ${JSON.stringify(response, '', 2)}`);
+        this.setState({ following });
+      })
+      .catch(error => console.log(error));
   }
 
   @bind
@@ -73,7 +96,7 @@ export default class App extends Component {
       this.setUser(AuthProvider.getUser());
     }
   }
-  render(props, { currentUser, currentPolish }) {
+  render(props, { currentUser, currentPolish, following }) {
     return (
       <ApolloProvider client={client}>
         <Router>
@@ -83,6 +106,11 @@ export default class App extends Component {
               <Route exact path="/" component={Home} />
               <Route path="/filter/:filter" component={Home} />
               <PrivateRoute
+                path="/new-polish"
+                component={NewPolish}
+                redirectTo="/"
+              />
+              <PrivateRoute
                 exact
                 path="/profile/"
                 user={currentUser}
@@ -90,12 +118,12 @@ export default class App extends Component {
                 self="true"
                 logout={this.logout}
               />
-              <PrivateRoute
-                path="/new-polish"
-                component={NewPolish}
-                redirectTo="/"
+              <PropsRoute
+                path="/profile/:username"
+                following={following}
+                setFollowing={this.setFollowing}
+                component={Profile}
               />
-              <PropsRoute path="/profile/:username" component={Profile} />
               <PropsRoute
                 path="/polish/:id"
                 component={Polish}
@@ -117,3 +145,13 @@ export default class App extends Component {
     );
   }
 }
+
+const FOLLOWING_QUERY = gql`
+  query gqlFollowingQuery($id: String!) {
+    userById(id: $id) {
+      following {
+        id
+      }
+    }
+  }
+`;

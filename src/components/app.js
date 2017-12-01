@@ -4,35 +4,64 @@ import { bind } from 'decko';
 import AuthProvider from '../providers/AuthProvider';
 
 // Router
-import Router from 'react-router-dom/BrowserRouter';
-import Route from 'react-router/Route';
-import Switch from 'react-router/Switch';
 import { PropsRoute, PrivateRoute } from '../providers/RoutesProvider';
+import Route from 'react-router/Route';
+import Router from 'react-router-dom/BrowserRouter';
+import Switch from 'react-router/Switch';
 
 // Apollo
-import { ApolloClient, InMemoryCache } from 'apollo-client-preset';
-import { createHttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloLink,
+  split
+} from 'apollo-client-preset';
 import { ApolloProvider } from 'react-apollo';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { HttpLink } from 'apollo-link-http';
 import { createUploadLink } from 'apollo-upload-client';
-const link = createUploadLink({
-  uri: 'http://localhost:8282/graphql'
-  // uri: 'http://api.prettyprism.com/graphql'
+import { getMainDefinition } from 'apollo-utilities';
+import { graphql } from 'react-apollo';
+import { setContext } from 'apollo-link-context';
+import { WebSocketLink } from 'apollo-link-ws';
+import gql from 'graphql-tag';
+
+const httpLink = new HttpLink({ uri: 'http://localhost:8282/graphql' });
+// const httpLink = new HttpLink({ uri: 'http://api.prettyprism.com/graphql' })
+
+const middlewareAuthLink = new ApolloLink((operation, forward) => {
+  const token = AuthProvider.getToken();
+  const authorizationHeader = token ? `Bearer ${token}` : null;
+  operation.setContext({
+    headers: {
+      authorization: authorizationHeader
+    }
+  });
+  return forward(operation);
 });
 
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token');
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : null
+const httpLinkWithAuthToken = middlewareAuthLink.concat(httpLink);
+
+const wsLink = new WebSocketLink({
+  uri: 'ws://localhost:8282/subscriptions',
+  options: {
+    reconnect: true,
+    connectionParams: {
+      authToken: AuthProvider.getToken()
     }
-  };
+  }
 });
+
+const link = split(
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+    return kind === 'OperationDefinition' && operation === 'subscription';
+  },
+  wsLink,
+  httpLinkWithAuthToken
+);
+
 const client = new ApolloClient({
-  link: authLink.concat(link),
+  link,
   cache: new InMemoryCache()
 });
 
@@ -97,6 +126,7 @@ export default class App extends Component {
     }
   }
   render(props, { currentUser, currentPolish, following }) {
+    const actionButton = currentUser ? <ActionButton /> : '';
     return (
       <ApolloProvider client={client}>
         <Router>
@@ -130,7 +160,11 @@ export default class App extends Component {
                 setPolish={this.setPolish}
                 user={currentUser}
               />
-              <Route path="/messages/" component={Messages} />
+              <PrivateRoute
+                path="/messages/"
+                component={Messages}
+                user={currentUser}
+              />
               <PropsRoute
                 path="/login/"
                 component={Login}
@@ -138,7 +172,7 @@ export default class App extends Component {
               />
               <Route component={Home} />
             </Switch>
-            <ActionButton />
+            {actionButton}
           </div>
         </Router>
       </ApolloProvider>

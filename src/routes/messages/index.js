@@ -1,10 +1,12 @@
 import { h, Component } from 'preact';
 // import PropTypes from 'prop-types';
 import style from './style';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Message from '../../components/message';
 
-export default class Messages extends Component {
+class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,3 +48,21 @@ export default class Messages extends Component {
     );
   }
 }
+
+const MESSAGES_SUBSCRIPTION = gql`
+  subscription newMessage($receiverId: String!) {
+    newMessage(receiverId: $receiverId) {
+      text
+      timestamp
+      senderUsername
+    }
+  }
+`;
+
+export default graphql(MESSAGES_SUBSCRIPTION, {
+  options: ownProps => ({
+    variables: {
+      receiverId: ownProps.user.id
+    }
+  })
+})(Messages);

@@ -7,6 +7,6 @@ export default class Chat extends Component {
     super(props);
   }
   render() {
-    return <p>Chat {this.props.match.params.id}</p>;
+    return <main class={style.chat}>Chat {this.props.match.params.id}</main>;
   }
 }

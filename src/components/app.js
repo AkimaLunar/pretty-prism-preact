@@ -162,12 +162,13 @@ export default class App extends Component {
                 user={currentUser}
               />
               <PrivateRoute
+                exact
                 path="/messages/"
                 component={Messages}
                 user={currentUser}
               />
               <PrivateRoute
-                path="/messages/:username"
+                path="/messages/:id"
                 component={Chat}
                 user={currentUser}
               />

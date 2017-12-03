@@ -179,7 +179,6 @@ export default class App extends Component {
               />
               <Route component={Home} />
             </Switch>
-            {actionButton}
           </div>
         </Router>
       </ApolloProvider>

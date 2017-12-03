@@ -11,24 +11,22 @@ export default class Message extends Component {
   constructor(props) {
     super(props);
   }
-  render({ message }) {
+  render({ id, user, count }) {
     // let messageClass = classNames({
     //   [style.message]: true,
     //   [style.new]: message.new
     // });
     return (
-      <Link class={style.message} to="/chat/:id">
+      <Link class={style.message} to={`/messages/${id}`}>
         <UserChip
           user={{
-            username: message.username,
-            avatar: message.avatar
+            username: user.username,
+            avatar: user.avatar
           }}
         />
         &ensp;|&ensp;
-        <span class="font__accent">
-          {message.new ? 'New' : message.messages.length}
-        </span>{' '}
-        messages
+        <span class="font__accent">{count}</span>
+        &ensp;messages
       </Link>
     );
   }

@@ -23,7 +23,7 @@ class NavigationProvider {
         title: path.replace(/(^\/profile\/)/, ''),
         extended: false
       };
-    case /(^\/messages)(\/)?$/.test(path):
+    case /(^\/messages\/)/.test(path):
       return {
         title: 'Messages',
         extended: false

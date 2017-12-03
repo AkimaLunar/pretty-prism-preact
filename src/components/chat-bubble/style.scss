@@ -1,0 +1,12 @@
+@import "../../style/base/variables";
+
+.chatbubble {
+  padding: 1rem;
+  border-bottom: $base-border;
+  width: 100%;
+  text-decoration: none;
+  display: block;
+  figure {
+    display: inline-block;
+  }
+}

@@ -11,55 +11,59 @@ class Messages extends Component {
     super(props);
   }
 
-  render({ gqlMessages }) {
+  render({ gqlMessages, user }) {
     if (gqlMessages.loading) {
       return (
-        <div class={style.profile}>
-          <main class={style.profile__main}>
-            <p>
-              Looking <i class="twa twa--eyes" />
-            </p>
-          </main>
-        </div>
+        <main class={style.messages}>
+          <p>
+            Looking <i class="twa twa--eyes" />
+          </p>
+        </main>
       );
     }
     if (gqlMessages.error) {
       return (
-        <div class={style.profile}>
-          <main class={style.profile__main}>
-            <p>
-              <i class="twa twa--scream" /> Oopsy daisies&hellip; Something went
-              wrong! Try again.
-            </p>
-          </main>
-        </div>
+        <main class={style.messages}>
+          <p>
+            <i class="twa twa--scream" /> Oopsy daisies&hellip; Something went
+            wrong! Try again.
+          </p>
+        </main>
+      );
+    }
+
+    if (gqlMessages.messages.length < 1) {
+      return (
+        <main class={style.messages}>
+          <p>
+            Sorry, {user.username}, it doesn&rsquo;t look like you have any
+            messages yet. Ask someone to swap a polish with them to start
+            chatting.
+          </p>
+        </main>
       );
     }
     if (!gqlMessages.messages.length > 1) {
       return (
-        <div class={style.profile}>
-          <main class={style.profile__main}>
-            <p>
-              No messages here yet. Ask someone to swap a polish with them to
-              start chatting.
-            </p>
-          </main>
-        </div>
+        <main class={style.profile__main}>
+          <p>
+            No messages here yet. Ask someone to swap a polish with them to
+            start chatting.
+          </p>
+        </main>
       );
     }
     return (
-      <div class={style.messages}>
-        <main>
-          {gqlMessages.messages.map(chat => (
-            <Message
-              user={chat.user}
-              count={chat.count}
-              id={chat.id}
-              key={chat.id}
-            />
-          ))}
-        </main>
-      </div>
+      <main class={style.messages}>
+        {gqlMessages.messages.map(chat => (
+          <Message
+            user={chat.user}
+            count={chat.count}
+            id={chat.id}
+            key={chat.id}
+          />
+        ))}
+      </main>
     );
   }
 }

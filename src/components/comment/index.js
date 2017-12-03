@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import style from './style';
 import Username from '../username';
+import Timestamp from '../timestamp';
 
 export function Comment(props) {
   const deleteComment = props.self ? (
@@ -17,7 +18,9 @@ export function Comment(props) {
   );
   return (
     <p class={style.comment}>
-      <Username user={props.comment.author} /> {props.comment.text}
+      <Username user={props.comment.author} />&ensp;
+      <Timestamp timestamp={props.comment.timestamp} />&ensp;
+      {props.comment.text}
       {deleteComment}
     </p>
   );

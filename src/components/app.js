@@ -67,6 +67,7 @@ const client = new ApolloClient({
 
 // Components
 import ActionButton from '../components/action-button';
+import Chat from '../routes/chat';
 import Header from './header';
 import Home from '../routes/home';
 import Login from '../routes/login';
@@ -163,6 +164,11 @@ export default class App extends Component {
               <PrivateRoute
                 path="/messages/"
                 component={Messages}
+                user={currentUser}
+              />
+              <PrivateRoute
+                path="/messages/:username"
+                component={Chat}
                 user={currentUser}
               />
               <PropsRoute

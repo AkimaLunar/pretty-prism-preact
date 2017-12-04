@@ -110,10 +110,12 @@ class Polish extends Component {
             </Link>
             &nbsp;|&nbsp;swapped {owners.length - 1} times
           </section>
-          <button class={`${style.polish__button} button button--primary`}>
-            {' '}
-            Ask to swap{' '}
-          </button>
+          <Link
+            class={`${style.polish__button} button button--primary`}
+            to={`/messages/${owners[0].id}`}
+          >
+            Ask to swap
+          </Link>
           <section>
             <h3 class={style.polish__heading}>
               <i class="twa twa--dancers" />&nbsp;Chatroom
@@ -146,6 +148,7 @@ const POLISH_QUERY = gql`
       name
       images
       owners {
+        id
         username
         avatar
       }

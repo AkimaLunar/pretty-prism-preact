@@ -1,0 +1,14 @@
+.flash {
+  min-height: 100%;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &__message {
+    align-self: center;
+    text-align: center;
+    font-size: 140%;
+    margin: 0 4rem;
+    color: $color-medium-grey;
+  }
+}

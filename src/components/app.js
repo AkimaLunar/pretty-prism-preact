@@ -75,6 +75,7 @@ import Messages from '../routes/messages';
 import NewPolish from '../routes/new-polish';
 import Polish from '../routes/polish';
 import Profile from '../routes/profile';
+import Welcome from '../routes/welcome';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
 
@@ -109,8 +110,6 @@ export default class App extends Component {
       })
       .then(response => {
         const following = response.data.userById.following.map(user => user.id);
-        console.log(`setFollowing() is running
-      ${JSON.stringify(response, '', 2)}`);
         this.setState({ following });
       })
       .catch(error => console.log(error));
@@ -134,12 +133,22 @@ export default class App extends Component {
           <div id="app">
             <Header user={currentUser} polish={currentPolish} />
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/filter/:filter" component={Home} />
+              <Route path="/welcome" component={Welcome} />
+              <PrivateRoute
+                exact
+                path="/"
+                component={Home}
+                redirectTo="/welcome/"
+              />
+              <PropsRoute
+                path="/filter/:filter"
+                component={Home}
+                redirectTo="/welcome/"
+              />
               <PrivateRoute
                 path="/new-polish"
                 component={NewPolish}
-                redirectTo="/"
+                redirectTo="/welcome/"
               />
               <PrivateRoute
                 exact
@@ -148,6 +157,7 @@ export default class App extends Component {
                 component={Profile}
                 self="true"
                 logout={this.logout}
+                redirectTo="/welcome/"
               />
               <PropsRoute
                 path="/profile/:username"
@@ -166,11 +176,13 @@ export default class App extends Component {
                 path="/messages/"
                 component={Messages}
                 user={currentUser}
+                redirectTo="/welcome/"
               />
               <PrivateRoute
                 path="/messages/:id"
                 component={Chat}
                 user={currentUser}
+                redirectTo="/welcome/"
               />
               <PropsRoute
                 path="/login/"

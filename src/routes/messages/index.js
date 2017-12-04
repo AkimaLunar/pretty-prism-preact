@@ -14,8 +14,8 @@ class Messages extends Component {
   render({ gqlMessages, user }) {
     if (gqlMessages.loading) {
       return (
-        <main class={style.messages}>
-          <p>
+        <main class="flash">
+          <p class="flash__message">
             Looking <i class="twa twa--eyes" />
           </p>
         </main>
@@ -23,8 +23,8 @@ class Messages extends Component {
     }
     if (gqlMessages.error) {
       return (
-        <main class={style.messages}>
-          <p>
+        <main class="flash">
+          <p class="flash__message">
             <i class="twa twa--scream" /> Oopsy daisies&hellip; Something went
             wrong! Try again.
           </p>
@@ -34,8 +34,8 @@ class Messages extends Component {
 
     if (gqlMessages.messages.length < 1) {
       return (
-        <main class={style.messages}>
-          <p>
+        <main class="flash">
+          <p class="flash__message">
             Sorry, {user.username}, it doesn&rsquo;t look like you have any
             messages yet. Ask someone to swap a polish with them to start
             chatting.

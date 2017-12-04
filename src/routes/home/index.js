@@ -17,9 +17,6 @@ class Home extends Component {
   render({ data, match }) {
     const { filter } = match.params;
     let message = '';
-    if (filter === 'nearby') {
-      message = <p>Explore polishes nearby!</p>;
-    }
     if (filter === 'your-collection') {
       message = (
         <Link
@@ -33,8 +30,8 @@ class Home extends Component {
 
     if (data.loading) {
       return (
-        <div class={style.home}>
-          <p>
+        <div class="flash">
+          <p class="flash__message">
             Fetching beauty <i class="twa twa--nail-care" />
           </p>
         </div>
@@ -42,10 +39,10 @@ class Home extends Component {
     }
     if (data.error) {
       return (
-        <div class={style.home}>
-          <p>
-            <i class="twa twa--scream" /> Oopsy daisies&hellip; Something went
-            wrong! Try again.
+        <div class="flash">
+          <p class="flash__message">
+            Oopsy daisies&hellip; Something went wrong!{' '}
+            <i class="twa twa--scream" /> Try again.
           </p>
         </div>
       );

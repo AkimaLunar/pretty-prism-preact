@@ -58,7 +58,8 @@ class Polish extends Component {
         this.setState({ error });
       });
   }
-  render({ gqlPolishQuery, user }, state) {
+  render({ gqlPolishQuery, gqlChat, user }, state) {
+    let chatButton;
     let commentForm = user ? (
       <form onSubmit={e => e.preventDefault()}>
         <textarea
@@ -78,7 +79,7 @@ class Polish extends Component {
         <i class="twa twa--key" /> Log in to comment.
       </p>
     );
-    if (gqlPolishQuery.loading) {
+    if (gqlPolishQuery.loading || gqlChat.loading) {
       return (
         <div class={style.profile}>
           <main class={style.profile__main}>
@@ -89,7 +90,12 @@ class Polish extends Component {
         </div>
       );
     }
-    if (!gqlPolishQuery.polish || gqlPolishQuery.error) {
+    if (
+      !gqlPolishQuery.polish ||
+      gqlPolishQuery.error ||
+      gqlChat.chatByUsername ||
+      gqlChat.error
+    ) {
       return (
         <div class={style.profile}>
           <main class={style.profile__main}>
@@ -98,6 +104,17 @@ class Polish extends Component {
         </div>
       );
     }
+    if (!gqlChat.loading && gqlChat.chatByUser) {
+      chatButton = (
+        <Link
+          class={`${style.polish__button} button button--primary`}
+          to={`/messages/${gqlChat.chatByUser.id}`}
+        >
+          Ask to swap
+        </Link>
+      );
+    }
+
     const { images, owners } = gqlPolishQuery.polish;
     // TODO: Add swipe element here
     return (
@@ -110,12 +127,9 @@ class Polish extends Component {
             </Link>
             &nbsp;|&nbsp;swapped {owners.length - 1} times
           </section>
-          <Link
-            class={`${style.polish__button} button button--primary`}
-            to={`/messages/${owners[0].id}`}
-          >
-            Ask to swap
-          </Link>
+
+          {chatButton}
+
           <section>
             <h3 class={style.polish__heading}>
               <i class="twa twa--dancers" />&nbsp;Chatroom
@@ -126,7 +140,9 @@ class Polish extends Component {
                 <Comment
                   comment={comment}
                   key={comment.id}
-                  self={user ? comment.author.username === user.username : false}
+                  self={
+                    user ? comment.author.username === user.username : false
+                  }
                   delete={this.deleteComment}
                 />
               ))
@@ -164,6 +180,14 @@ const POLISH_QUERY = gql`
   }
 `;
 
+const CHAT_QUERY = gql`
+  query gqlChat($receiverId: String!) {
+    chatByUser(receiverId: $receiverId) {
+      id
+    }
+  }
+`;
+
 const CREATE_COMMENT_MUTATION = gql`
   mutation gqlCommentMutation($polishId: String!, $text: String!) {
     createComment(polishId: $polishId, text: $text) {
@@ -190,6 +214,14 @@ export default compose(
     options: ownProps => ({
       variables: {
         polishId: ownProps.match.params.id
+      }
+    })
+  }),
+  graphql(CHAT_QUERY, {
+    name: 'gqlChat',
+    options: ownProps => ({
+      variables: {
+        receiverId: ownProps.match.params.id
       }
     })
   }),

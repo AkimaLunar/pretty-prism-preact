@@ -55,7 +55,7 @@ class Chat extends Component {
     return (
       <div>
         <main class={style.chat}>
-          {gqlChat.chat.map(message => (
+          {gqlChat.chatById.messages.map(message => (
             <ChatBubble
               username={message.sender.username}
               text={message.text}
@@ -72,13 +72,14 @@ class Chat extends Component {
 }
 
 const CHAT_QUERY = gql`
-  query gqlChat($receiverId: String!, $senderId: String!) {
-    chat(receiverId: $receiverId, senderId: $senderId) {
-      id
-      text
-      timestamp
-      sender {
-        username
+  query gqlChat($id: String!) {
+    chatById(id: $id) {
+      messages {
+        sender {
+          username
+        }
+        text
+        timestamp
       }
     }
   }
@@ -97,8 +98,7 @@ export default compose(
     name: 'gqlChat',
     options: ownProps => ({
       variables: {
-        receiverId: ownProps.user.id,
-        senderId: ownProps.match.params.id
+        id: ownProps.match.params.id
       }
     })
   }),

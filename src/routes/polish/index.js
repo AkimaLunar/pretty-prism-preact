@@ -126,7 +126,7 @@ class Polish extends Component {
                 <Comment
                   comment={comment}
                   key={comment.id}
-                  self={comment.author.username === user.username}
+                  self={user ? comment.author.username === user.username : false}
                   delete={this.deleteComment}
                 />
               ))

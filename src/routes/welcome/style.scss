@@ -4,6 +4,7 @@
   padding: $view-padding;
   min-height: 100%;
   width: 100%;
+  position: relative;
   ul {
     list-style: none;
     padding: 0;
@@ -11,9 +12,8 @@
     font-weight: $font-weight-bold;
   }
   &__header {
-    transition: all 0.5s ease-in-out;
     position: relative;
-    margin: 2rem auto;
+    margin: 4rem auto 2rem auto;
     text-align: center;
     z-index: 30;
     color: $color-secondary;
@@ -24,7 +24,14 @@
       transform: translate(0.25rem, 0.25rem);
     }
   }
+  &__subheader {
+    font-family: $heading-font-family;
+    font-size: 2rem;
+    text-align: center;
+  }
   &__buttongroup {
+    position: absolute;
+    bottom: 1rem;
     display: flex;
     margin-top: 4rem;
     a {

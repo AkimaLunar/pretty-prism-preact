@@ -6,9 +6,9 @@ function Welcome(props) {
   return (
     <main class={style.welcome}>
       <h1 class={style.welcome__header}>Welcome</h1>
-      <p>
-        This is an app to swap nail polishes with your squad. Create an account
-        or see what other people nearby are uploading.
+      <p class={style.welcome__subheader}>
+        Swap <i class="twa twa--nail-care" /> nail polishes
+        <br />with <i class="twa twa--dancers" /> your squad!
       </p>
       <ul>
         <li>

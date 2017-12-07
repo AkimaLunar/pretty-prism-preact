@@ -1,5 +1,5 @@
 import { h } from 'preact';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './style';
 import Item from '../item';
 
@@ -29,5 +29,9 @@ function Feed({ polishes }) {
     </div>
   );
 }
+
+Feed.propTypes = {
+  polishes: PropTypes.array
+};
 
 export default Feed;

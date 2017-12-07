@@ -11,8 +11,16 @@ class Messages extends Component {
     super(props);
   }
 
-  render({ gqlMessages, user }) {
-    if (gqlMessages.loading) {
+  render({ gqlUser, user }) {
+    const setSender = (users, id) => {
+      if (users.indexOf(id) === 0) {
+        return users[1];
+      } else {
+        return users[0];
+      }
+    };
+
+    if (gqlUser.loading) {
       return (
         <main class="flash">
           <p class="flash__message">
@@ -21,7 +29,7 @@ class Messages extends Component {
         </main>
       );
     }
-    if (gqlMessages.error) {
+    if (gqlUser.error) {
       return (
         <main class="flash">
           <p class="flash__message">
@@ -32,7 +40,7 @@ class Messages extends Component {
       );
     }
 
-    if (gqlMessages.messages.length < 1) {
+    if (gqlUser.userById.chats.length < 1) {
       return (
         <main class="flash">
           <p class="flash__message">
@@ -43,22 +51,12 @@ class Messages extends Component {
         </main>
       );
     }
-    if (!gqlMessages.messages.length > 1) {
-      return (
-        <main class={style.profile__main}>
-          <p>
-            No messages here yet. Ask someone to swap a polish with them to
-            start chatting.
-          </p>
-        </main>
-      );
-    }
     return (
       <main class={style.messages}>
-        {gqlMessages.messages.map(chat => (
+        {gqlUser.userById.chats.map(chat => (
           <Message
-            user={chat.user}
-            count={chat.count}
+            user={setSender(chat.users, user.id)}
+            count={chat.messages.length}
             id={chat.id}
             key={chat.id}
           />
@@ -68,24 +66,29 @@ class Messages extends Component {
   }
 }
 
-const MESSAGES_QUERY = gql`
-  query gqlMessages($receiverId: String!) {
-    messages(receiverId: $receiverId) {
+const USER_QUERY = gql`
+  query gqlUser($id: String!) {
+    userById(id: $id) {
       id
-      user {
-        username
-        avatar
+      chats {
+        id
+        messages {
+          text
+        }
+        users {
+          username
+          avatar
+        }
       }
-      count
     }
   }
 `;
 
-export default graphql(MESSAGES_QUERY, {
-  name: 'gqlMessages',
+export default graphql(USER_QUERY, {
+  name: 'gqlUser',
   options: ownProps => ({
     variables: {
-      receiverId: ownProps.user.id
+      id: ownProps.user.id
     }
   })
 })(Messages);

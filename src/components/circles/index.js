@@ -1,9 +1,9 @@
 import { h } from 'preact';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './style';
 import classNames from 'classnames';
 
-export default function Circles(props) {
+function Circles(props) {
   let circleClass = classNames({
     [style.cls__login]: !props.on,
     [style.cls__signup]: props.on
@@ -247,3 +247,9 @@ export default function Circles(props) {
     </svg>
   );
 }
+
+Circles.propTypes = {
+  on: PropTypes.bool.isRequired
+};
+
+export default Circles;

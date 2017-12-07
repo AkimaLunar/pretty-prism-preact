@@ -1,9 +1,10 @@
 import { h } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
 import Username from '../username';
 import Timestamp from '../timestamp';
 
-export function Comment(props) {
+function Comment(props) {
   const deleteComment = props.self ? (
     <a
       onClick={e => {
@@ -25,5 +26,16 @@ export function Comment(props) {
     </p>
   );
 }
+
+Comment.propTypes = {
+  self: PropTypes.func.isRequired,
+  delete: PropTypes.func.isRequired,
+  comment: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    timestamp: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired
+  })
+};
 
 export default Comment;

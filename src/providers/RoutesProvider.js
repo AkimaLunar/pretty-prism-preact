@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import PropTypes from 'prop-types';
 import Route from 'react-router/Route';
 import Redirect from 'react-router/Redirect';
 import AuthProvider from './AuthProvider';
@@ -19,6 +20,10 @@ export const PropsRoute = ({ component, ...rest }) => {
   );
 };
 
+PropsRoute.propTypes = {
+  component: PropTypes.element
+};
+
 export const PrivateRoute = ({ component, redirectTo, ...rest }) => {
   return (
     <Route
@@ -37,4 +42,9 @@ export const PrivateRoute = ({ component, redirectTo, ...rest }) => {
       }}
     />
   );
+};
+
+PrivateRoute.propTypes = {
+  component: PropTypes.element,
+  redirectTo: PropTypes.string
 };

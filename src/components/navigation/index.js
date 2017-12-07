@@ -13,6 +13,11 @@ export default function Navigation(props) {
           <Link to="/">
             <h1 class={style.navigation__logo}>PrettyPrism</h1>
           </Link>
+        ) : props.data.back ? (
+          <Link to={props.data.back}>
+            <i class={`${style.navigation__back} twa twa--point-left `} />&nbsp;Back&ensp;|&ensp;
+            <span class={style.navigation__title}>{this.props.data.title}</span>
+          </Link>
         ) : (
           <a
             onClick={e => {
@@ -20,9 +25,7 @@ export default function Navigation(props) {
               props.goBack();
             }}
           >
-            <i
-              class={`${style.navigation__back} twa twa--point-left `}
-            />&nbsp;Back&ensp;|&ensp;
+            <i class={`${style.navigation__back} twa twa--point-left `} />&nbsp;Back&ensp;|&ensp;
             <span class={style.navigation__title}>{this.props.data.title}</span>
           </a>
         )}

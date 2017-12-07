@@ -1,11 +1,12 @@
 class NavigationProvider {
-  static getPath(location, polish) {
+  static getPath(location) {
     const path = location.pathname;
     switch (true) {
     case /(^\/$)|(^\/filter\/)/.test(path):
       return {
         title: 'PrettyPrism',
-        extended: true
+        extended: true,
+        back: '/'
       };
     case /(^\/polish\/)/.test(path):
       //console.log(JSON.stringify(polish));
@@ -23,10 +24,17 @@ class NavigationProvider {
         title: path.replace(/(^\/profile\/)/, ''),
         extended: false
       };
-    case /(^\/messages\/)/.test(path):
+    case /(^\/messages)(\/)?$/.test(path):
       return {
         title: 'Messages',
-        extended: false
+        extended: false,
+        back: '/'
+      };
+    case /^\/messages\/.*/.test(path):
+      return {
+        title: 'Chat',
+        extended: false,
+        back: '/messages/'
       };
     case /(^\/login)(\/)?$/.test(path):
       return {

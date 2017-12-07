@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
 import linkState from 'linkstate';
-import { Comment } from '../comment/index';
 
 class ChatInput extends Component {
   constructor(props) {
@@ -33,5 +33,9 @@ class ChatInput extends Component {
     );
   }
 }
+
+ChatInput.propTypes = {
+  submit: PropTypes.func.isRequired
+};
 
 export default ChatInput;

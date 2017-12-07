@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
 // TODO: implement styling for new messages
 import classNames from 'classnames';
@@ -6,7 +7,7 @@ import classNames from 'classnames';
 import Username from '../username';
 import Timestamp from '../timestamp';
 
-export function ChatBubble(props) {
+function ChatBubble(props) {
   const { username, timestamp, text, self } = props;
   const user = { username };
   const articleClass = classNames({
@@ -37,5 +38,12 @@ export function ChatBubble(props) {
     </article>
   );
 }
+
+ChatBubble.propTypes = {
+  username: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+  self: PropTypes.bool.isRequired
+};
 
 export default ChatBubble;

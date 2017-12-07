@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './style';
 import linkState from 'linkstate';
 import classNames from 'classnames';
@@ -103,6 +103,15 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  gqlCreateUser: PropTypes.object.isRequired,
+  gqlLogin: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
+};
 
 const CREATE_USER_MUTATION = gql`
   mutation gqlCreateUser($username: String!, $password: String!) {

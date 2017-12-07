@@ -10,60 +10,9 @@ import Router from 'react-router-dom/BrowserRouter';
 import Switch from 'react-router/Switch';
 
 // Apollo
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloLink,
-  split
-} from 'apollo-client-preset';
+import apolloClient from '../providers/apolloClient';
 import { ApolloProvider } from 'react-apollo';
-import { HttpLink } from 'apollo-link-http';
-import { createUploadLink } from 'apollo-upload-client';
-import { getMainDefinition } from 'apollo-utilities';
-import { graphql } from 'react-apollo';
-import { setContext } from 'apollo-link-context';
-import { WebSocketLink } from 'apollo-link-ws';
 import gql from 'graphql-tag';
-
-const httpLink = new HttpLink({ uri: 'http://localhost:8282/graphql' });
-// const httpLink = new HttpLink({ uri: 'http://api.prettyprism.com/graphql' })
-
-const middlewareAuthLink = new ApolloLink((operation, forward) => {
-  const token = AuthProvider.getToken();
-  const authorizationHeader = token ? `Bearer ${token}` : null;
-  operation.setContext({
-    headers: {
-      authorization: authorizationHeader
-    }
-  });
-  return forward(operation);
-});
-
-const httpLinkWithAuthToken = middlewareAuthLink.concat(httpLink);
-
-const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:8282/subscriptions',
-  options: {
-    reconnect: true,
-    connectionParams: {
-      authToken: AuthProvider.getToken()
-    }
-  }
-});
-
-const link = split(
-  ({ query }) => {
-    const { kind, operation } = getMainDefinition(query);
-    return kind === 'OperationDefinition' && operation === 'subscription';
-  },
-  wsLink,
-  httpLinkWithAuthToken
-);
-
-const client = new ApolloClient({
-  link,
-  cache: new InMemoryCache()
-});
 
 // Components
 import ActionButton from '../components/action-button';
@@ -79,7 +28,7 @@ import Welcome from '../routes/welcome';
 // import Home from 'async!./home';
 // import Profile from 'async!./profile';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,21 +38,24 @@ export default class App extends Component {
     };
   }
 
+  // eslint-disable-next-line
   @bind
   setPolish(polish) {
     this.setState({ currentPolish: polish });
   }
 
+  // eslint-disable-next-line
   @bind
   setUser(user) {
     this.setState({ currentUser: user });
     this.setFollowing();
   }
 
+  // eslint-disable-next-line
   @bind
   setFollowing() {
     const { currentUser } = this.state;
-    const following = client
+    apolloClient
       .query({
         query: FOLLOWING_QUERY,
         variables: { id: currentUser.id }
@@ -112,7 +64,7 @@ export default class App extends Component {
         const following = response.data.userById.following.map(user => user.id);
         this.setState({ following });
       })
-      .catch(error => console.log(error));
+      .catch(error => this.setState({ error }));
   }
 
   @bind
@@ -128,7 +80,7 @@ export default class App extends Component {
   render(props, { currentUser, currentPolish, following }) {
     const actionButton = currentUser ? <ActionButton /> : '';
     return (
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <Router>
           <div id="app">
             <Header user={currentUser} polish={currentPolish} />
@@ -207,3 +159,5 @@ const FOLLOWING_QUERY = gql`
     }
   }
 `;
+
+export default App;

@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { bind } from 'decko';
@@ -17,7 +17,7 @@ class Chat extends Component {
     return this.props
       .gqlCreateMessage({
         variables: {
-          receiver: this.props.match.params.id,
+          chatId: this.props.match.params.id,
           text: text
         }
       })
@@ -71,6 +71,18 @@ class Chat extends Component {
   }
 }
 
+Chat.propTypes = {
+  gqlCreateMessage: PropTypes.object,
+  gqlChat: PropTypes.shape({
+    refetch: PropTypes.func
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  })
+};
+
 const CHAT_QUERY = gql`
   query gqlChat($id: String!) {
     chatById(id: $id) {
@@ -86,8 +98,8 @@ const CHAT_QUERY = gql`
 `;
 
 const CREATE_MESAGE_MUTATION = gql`
-  mutation gqlCreateMessage($receiver: String!, $text: String!) {
-    createMessage(receiver: $receiver, text: $text) {
+  mutation gqlCreateMessage($chatId: String!, $text: String!) {
+    createMessage(chatId: $chatId, text: $text) {
       id
     }
   }

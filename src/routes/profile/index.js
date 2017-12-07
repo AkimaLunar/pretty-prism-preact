@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
 
 import { graphql, compose } from 'react-apollo';
@@ -10,7 +11,8 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
+      error: null
     };
   }
   logout() {
@@ -27,7 +29,7 @@ class Profile extends Component {
       })
       // TODO: THIS IS REALLY SHITTY
       .then(() => window.location.reload())
-      .catch(err => console.log(err));
+      .catch(error => this.setState({ error }));
   }
 
   unfollow() {
@@ -39,7 +41,7 @@ class Profile extends Component {
       })
       // TODO: THIS IS REALLY SHITTY
       .then(() => window.location.reload())
-      .catch(err => console.log(err));
+      .catch(error => this.setState({ error }));
   }
 
   render({ gqlUserQuery, self, following }) {
@@ -119,6 +121,20 @@ class Profile extends Component {
     );
   }
 }
+
+Profile.propTypes = {
+  logout: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }),
+  gqlUserQuery: PropTypes.shape({
+    userByUsername: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }),
+  gqlFollow: PropTypes.object.isRequired,
+  gqlUnfollow: PropTypes.object.isRequired
+};
 
 const USER_QUERY = gql`
   query gqlUserQuery($username: String!) {

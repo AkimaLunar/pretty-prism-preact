@@ -2,7 +2,7 @@ import { h } from 'preact';
 import style from './style';
 import Link from 'react-router-dom/Link';
 
-function Welcome(props) {
+function Welcome() {
   return (
     <main class={style.welcome}>
       <h1 class={style.welcome__header}>Welcome</h1>

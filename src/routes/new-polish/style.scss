@@ -23,7 +23,7 @@
     margin-bottom: 1rem;
     padding: 1rem 0;
     padding-left: 1rem;
-    background-color: transparentize($color-light-grey, .5);
+    background-color: transparentize($color-light-grey, 0.5);
     height: 10rem;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -63,23 +63,6 @@
       i {
         font-size: 200%;
       }
-    }
-    &__preview {
-      width: 100%;
-    }
-    &__remove {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      height: 4rem;
-      width: 4rem;
-      font-family: $heading-font-family;
-      font-weight: $font-weight-bold;
-      line-height: 4rem;
-      text-align: center;
-      background-color: white;
-      border-radius: 50%;
-      box-shadow: $box-shadow-4;
     }
     &__input {
       width: 0.1px;

@@ -1,9 +1,11 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
+import { bind } from 'decko';
 import linkState from 'linkstate';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
+import ImagePreview from '../../components/image-preview';
 
 class NewPolish extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class NewPolish extends Component {
     };
   }
 
+  @bind
   upload(e) {
     e.preventDefault();
     this.props
@@ -51,6 +54,8 @@ class NewPolish extends Component {
     };
     reader.readAsDataURL(file);
   }
+
+  @bind
   imageClear(e) {
     e.preventDefault();
     this.setState({
@@ -77,21 +82,11 @@ class NewPolish extends Component {
   }
   render(props, { imagePreviewUrl, name, images }) {
     const imageUploder = imagePreviewUrl ? (
-      <div class={style.newpolish__upload}>
-        <span
-          onClick={e => this.imageClear(e)}
-          class={style.newpolish__upload__remove}
-        >
-          x
-        </span>
-        <img src={imagePreviewUrl} class={style.newpolish__upload__preview} />
-        <button
-          type="submit"
-          class={`button button--secondary ${style.newpolish__input}`}
-        >
-          Add this pic
-        </button>
-      </div>
+      <ImagePreview
+        submit={this.upload}
+        remove={this.imageClear}
+        image={imagePreviewUrl}
+      />
     ) : (
       <div class={style.newpolish__upload}>
         <input
@@ -126,7 +121,7 @@ class NewPolish extends Component {
     return (
       <div class={style.newpolish}>
         <h4 class={style.newpolish__heading}>Add that new color</h4>
-        <form onSubmit={e => this.upload(e)}>
+        <form>
           <label class={style.newpolish__label} for="name">
             name
           </label>

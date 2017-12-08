@@ -13,7 +13,8 @@ class Messages extends Component {
 
   render({ gqlUser, user }) {
     const setSender = (users, id) => {
-      if (users.indexOf(id) === 0) {
+      const _users = users.map(user => user.id);
+      if (_users.indexOf(id) === 0) {
         return users[1];
       } else {
         return users[0];
@@ -76,6 +77,7 @@ const USER_QUERY = gql`
           text
         }
         users {
+          id
           username
           avatar
         }

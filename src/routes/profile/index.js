@@ -15,36 +15,15 @@ class Profile extends Component {
       error: null
     };
   }
+  componentWillReceiveProps(nextProps) {
+    console.log(JSON.stringify(nextProps.following, '', 2));
+  }
   logout() {
     this.props.logout();
     this.props.history.push('/');
   }
 
-  follow() {
-    this.props
-      .gqlFollow({
-        variables: {
-          userToFollowId: this.props.gqlUserQuery.userByUsername.id
-        }
-      })
-      // TODO: THIS IS REALLY SHITTY
-      .then(() => window.location.reload())
-      .catch(error => this.setState({ error }));
-  }
-
-  unfollow() {
-    this.props
-      .gqlUnfollow({
-        variables: {
-          userToFollowId: this.props.gqlUserQuery.userByUsername.id
-        }
-      })
-      // TODO: THIS IS REALLY SHITTY
-      .then(() => window.location.reload())
-      .catch(error => this.setState({ error }));
-  }
-
-  render({ gqlUserQuery, self, following }) {
+  render({ gqlUserQuery, self, following, follow, unfollow }) {
     if (gqlUserQuery.loading) {
       return (
         <div class={style.profile}>
@@ -74,14 +53,14 @@ class Profile extends Component {
     ) : _following ? (
       <button
         class={`button button--danger ${style.profile__button}`}
-        onClick={() => this.unfollow()}
+        onClick={() => unfollow(gqlUserQuery.userByUsername.id)}
       >
         Unfollow
       </button>
     ) : (
       <button
         class={`button button--secondary ${style.profile__button}`}
-        onClick={() => this.follow()}
+        onClick={() => follow(gqlUserQuery.userByUsername.id)}
       >
         Follow
       </button>
@@ -127,6 +106,7 @@ Profile.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }),
+  following: PropTypes.array.isRequired,
   gqlUserQuery: PropTypes.shape({
     userByUsername: PropTypes.shape({
       id: PropTypes.string.isRequired

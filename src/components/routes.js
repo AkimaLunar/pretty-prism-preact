@@ -16,18 +16,27 @@ import NewPolish from '../routes/new-polish';
 import Polish from '../routes/polish';
 import Profile from '../routes/profile';
 import Welcome from '../routes/welcome';
+// import Home from 'async!./home';
+// import Profile from 'async!./profile';
 
 function Routes({ setUser, currentUser, following, follow, unfollow, logout }) {
   return (
     <Router>
-      <div>
+      <div class="view">
         <Header user={currentUser} />
         <Route path="/welcome" component={Welcome} />
-        <PrivateRoute exact path="/" component={Home} redirectTo="/welcome/" />
+        <PrivateRoute
+          exact
+          path="/"
+          component={Home}
+          user={currentUser}
+          redirectTo="/welcome/"
+        />
         <PropsRoute
           path="/filter/:filter"
           component={Home}
           redirectTo="/welcome/"
+          user={currentUser}
         />
         <PrivateRoute
           path="/new-polish"

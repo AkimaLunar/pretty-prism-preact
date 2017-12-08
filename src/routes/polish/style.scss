@@ -2,7 +2,8 @@
 
 .polish {
   @extend %normal-view;
-  &__image {
+  &__image,
+  &__button {
     width: 100%;
   }
 
@@ -10,14 +11,6 @@
     @extend %normal-padding;
     padding-top: 0;
     padding-bottom: 1rem;
-  }
-
-  &__button,
-  &__textarea {
-    width: 100%;
-  }
-  &__textarea {
-    margin: 1rem 0;
   }
 
   &__info {
@@ -38,5 +31,14 @@
 
   &__heading {
     margin-top: 2rem;
+  }
+
+  &__p {
+    text-align: center;
+    i {
+      vertical-align: middle;
+      font-size: 120%;
+      margin: 0;
+    }
   }
 }

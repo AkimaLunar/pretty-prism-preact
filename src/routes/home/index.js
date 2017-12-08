@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
 
 import { graphql } from 'react-apollo';
@@ -6,6 +7,8 @@ import gql from 'graphql-tag';
 import Link from 'react-router-dom/Link';
 
 import Feed from '../../components/feed';
+import ActionButton from '../../components/action-button';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +17,7 @@ class Home extends Component {
     };
   }
 
-  render({ data, match }) {
+  render({ data, match, user }) {
     const { filter } = match.params;
     let message = '';
     if (filter === 'your-collection') {
@@ -51,10 +54,25 @@ class Home extends Component {
       <div class={style.home}>
         {message}
         <Feed polishes={data.polishes} />
+        {user ? <ActionButton to="/messages/" emoji="love-letter" /> : ''}
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  user: PropTypes.shape({
+    _id: PropTypes.string,
+    username: PropTypes.string,
+    avatar: PropTypes.string
+  }),
+  data: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      filter: PropTypes.string
+    })
+  })
+};
 
 const FEED_QUERY = gql`
   query gqlFeed($filter: String) {

@@ -4,6 +4,7 @@ import style from './style';
 
 import { withRouter } from 'react-router';
 import Navigation from '../navigation';
+import NavigationExtended from '../navigation-extended';
 import NavigationProvider from '../../providers/NavigationProvider';
 
 class Header extends Component {
@@ -21,23 +22,7 @@ class Header extends Component {
             goBack={() => this.goBack()}
           />
         </nav>
-        {navigationData.extended ? (
-          <nav class={style.header__extended}>
-            <div class={style.header__float}>
-              <Link activeClassName={style.active} to="/">
-                Squad
-              </Link>
-              <Link activeClassName={style.active} to="/filter/nearby">
-                Nearby
-              </Link>
-              <Link activeClassName={style.active} to="/filter/your-collection">
-                Your Collection
-              </Link>
-            </div>
-          </nav>
-        ) : (
-          ''
-        )}
+        {navigationData.extended ? <NavigationExtended loggedin={user} /> : ''}
       </header>
     );
   }

@@ -11,12 +11,6 @@ import { ApolloProvider } from 'react-apollo';
 import apolloClient from '../providers/apolloClient';
 import gql from 'graphql-tag';
 
-// Components
-import ActionButton from '../components/action-button';
-
-// import Home from 'async!./home';
-// import Profile from 'async!./profile';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -93,7 +87,6 @@ class App extends Component {
     }
   }
   render(props, { currentUser, following }) {
-    const actionButton = currentUser ? <ActionButton /> : '';
     return (
       <div id="app">
         <ApolloProvider client={apolloClient}>

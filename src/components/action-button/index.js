@@ -1,15 +1,20 @@
 import { h } from 'preact';
 import style from './style';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Link from 'react-router-dom/Link';
 
-export default function ActionButton() {
+function ActionButton({ to, emoji }) {
   return (
-    <Link class={style.actionbutton} to="/messages/">
-      <i class="twa twa--love-letter" />
+    <Link class={style.actionbutton} to={to}>
+      <i class={`twa twa--${emoji}`} />
     </Link>
   );
 }
 
-ActionButton.propTypes = {};
+ActionButton.propTypes = {
+  to: PropTypes.string.isRequired,
+  emoji: PropTypes.string.isRequired
+};
+
+export default ActionButton;

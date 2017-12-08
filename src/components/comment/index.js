@@ -4,12 +4,12 @@ import style from './style';
 import Username from '../username';
 import Timestamp from '../timestamp';
 
-function Comment(props) {
-  const deleteComment = props.self ? (
+function Comment({ comment, self }) {
+  const deleteComment = self ? (
     <a
       onClick={e => {
         e.preventDefault();
-        props.delete(props.comment.id);
+        this.props.deleteComment(comment.id);
       }}
     >
       &ensp;|&nbsp;delete
@@ -19,9 +19,9 @@ function Comment(props) {
   );
   return (
     <p class={style.comment}>
-      <Username user={props.comment.author} />&ensp;
-      <Timestamp timestamp={props.comment.timestamp} />&ensp;
-      {props.comment.text}
+      <Username user={comment.author} />&ensp;
+      <Timestamp timestamp={comment.timestamp} />&ensp;
+      {comment.text}
       {deleteComment}
     </p>
   );
@@ -29,7 +29,7 @@ function Comment(props) {
 
 Comment.propTypes = {
   self: PropTypes.func.isRequired,
-  delete: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
   comment: PropTypes.shape({
     id: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,

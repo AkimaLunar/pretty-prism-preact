@@ -41,6 +41,7 @@ class App extends Component {
     apolloClient
       .query({
         query: FOLLOWING_QUERY,
+        fetchPolicy: 'network-only',
         variables: { id: currentUser.id }
       })
       .then(response => {

@@ -15,9 +15,7 @@ class Profile extends Component {
       error: null
     };
   }
-  componentWillReceiveProps(nextProps) {
-    console.log(JSON.stringify(nextProps.following, '', 2));
-  }
+
   logout() {
     this.props.logout();
     this.props.history.push('/');
@@ -53,7 +51,9 @@ class Profile extends Component {
     ) : _following ? (
       <button
         class={`button button--danger ${style.profile__button}`}
-        onClick={() => unfollow(gqlUserQuery.userByUsername.id)}
+        onClick={() => {
+          unfollow(gqlUserQuery.userByUsername.id);
+        }}
       >
         Unfollow
       </button>

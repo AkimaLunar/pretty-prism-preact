@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './style';
 
 import Link from 'react-router-dom/Link';
@@ -7,29 +7,32 @@ import UserChip from '../userchip';
 // TODO: implement styling for new messages
 // import classNames from 'classnames';
 
-export default class Message extends Component {
+class Message extends Component {
   constructor(props) {
     super(props);
   }
-  render({ message }) {
+  render({ id, user, count }) {
     // let messageClass = classNames({
     //   [style.message]: true,
     //   [style.new]: message.new
     // });
     return (
-      <Link class={style.message} to="/chat/:id">
-        <UserChip
-          user={{
-            username: message.username,
-            avatar: message.avatar
-          }}
-        />
+      <Link class={style.message} to={`/messages/${id}`}>
+        <UserChip user={user} />
         &ensp;|&ensp;
-        <span class="font__accent">
-          {message.new ? 'New' : message.messages.length}
-        </span>{' '}
-        messages
+        <span class="font__accent">{count}</span>
+        &ensp;messages
       </Link>
     );
   }
 }
+Message.propTypes = {
+  id: PropTypes.string,
+  user: PropTypes.shape({
+    username: PropTypes.string,
+    avatar: PropTypes.string
+  }),
+  count: PropTypes.number
+};
+
+export default Message;

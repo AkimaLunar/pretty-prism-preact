@@ -1,51 +1,30 @@
 import { h, Component } from 'preact';
-import Link from 'react-router-dom/Link';
 import style from './style';
 
+import { withRouter } from 'react-router';
 import Navigation from '../navigation';
-import navigationProvider from '../../providers/navigationProvider';
+import NavigationExtended from '../navigation-extended';
+import NavigationProvider from '../../providers/NavigationProvider';
 
-const LOGGED_IN_USER = {
-  _id: '000112233',
-  username: 'user.name77',
-  avatar: 'http://i.pravatar.cc/34'
-};
-export default class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
+class Header extends Component {
   goBack() {
     this.context.router.history.goBack();
   }
-  render() {
-    const navigationData = navigationProvider(this.context);
+  render({ location, user, polish }) {
+    const navigationData = NavigationProvider.getPath(location, polish);
     return (
       <header class={style.header}>
         <nav class={style.header__nav}>
           <Navigation
             data={navigationData}
-            user={LOGGED_IN_USER}
+            user={user}
             goBack={() => this.goBack()}
           />
         </nav>
-        {navigationData.extended ? (
-          <nav class={style.header__extended}>
-            <div class={style.header__float}>
-              <Link activeClassName={style.active} to="/">
-                Squad
-              </Link>
-              <Link activeClassName={style.active} to="/filter/nearby">
-                Nearby
-              </Link>
-              <Link activeClassName={style.active} to="/filter/your-collection">
-                Your Collection
-              </Link>
-            </div>
-          </nav>
-        ) : (
-          ''
-        )}
+        {navigationData.extended ? <NavigationExtended loggedin={user} /> : ''}
       </header>
     );
   }
 }
+const HeaderWithRouter = withRouter(Header);
+export default HeaderWithRouter;

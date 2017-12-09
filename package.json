@@ -50,15 +50,16 @@
     "extends": "eslint-config-synacor"
   },
   "devDependencies": {
+    "babel-eslint": "7",
     "babel-jest": "^21.2.0",
-    "eslint": "^4.7.2",
+    "eslint": "3.x",
     "eslint-config-synacor": "^2.0.0",
     "eslint-plugin-jest": "^21.2.0",
     "eslint-plugin-react": "^7.3.0",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "jest": "^21.2.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.7.2",
     "postcss": "^6.0.0",
     "preact-cli": "^1.4.1",
     "preact-render-spy": "^1.2.1",
@@ -66,8 +67,19 @@
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
+    "apollo-client-preset": "^1.0.3",
+    "apollo-link-context": "^1.0.1",
+    "apollo-link-ws": "^1.0.2",
+    "apollo-upload-client": "^7.0.0-alpha.1",
+    "aws-sdk": "^2.155.0",
     "classnames": "^2.2.5",
+    "decko": "^1.2.0",
+    "graphql": "^0.11.7",
+    "graphql-tag": "^2.5.0",
     "linkstate": "^1.1.0",
-    "react-router-dom": "^4.2.2"
+    "moment": "^2.19.2",
+    "react-apollo": "^2.0.1",
+    "react-router-dom": "^4.2.2",
+    "subscriptions-transport-ws": "^0.9.2"
   }
 }

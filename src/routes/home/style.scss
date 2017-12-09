@@ -4,14 +4,10 @@
   padding: $view-padding;
   min-height: 100%;
   width: 100%;
-}
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 2rem;
-  grid-auto-rows: minmax(10rem, auto);
-  @media screen and (min-width: 550px) {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  &__input {
+    width: 100%;
+    line-height: 5.5rem;
+    margin-bottom: 2rem;
   }
 }

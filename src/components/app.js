@@ -1,35 +1,137 @@
+// Preact
 import { h, Component } from 'preact';
-import Router from 'react-router-dom/BrowserRouter';
-import Route from 'react-router/Route';
-import Switch from 'react-router/Switch';
-import Home from '../routes/home';
-import Header from './header';
-import Profile from '../routes/profile';
-import Messages from '../routes/messages';
-import Polish from '../routes/polish';
-import ActionButton from '../components/action-button';
-// import Home from 'async!./home';
-// import Profile from 'async!./profile';
+import { bind } from 'decko'; // eslint-disable-line no-unused-vars
+import AuthProvider from '../providers/AuthProvider';
 
-export default class App extends Component {
-  render() {
+// Router
+import Routes from './routes';
+
+// Apollo
+import { ApolloProvider } from 'react-apollo';
+import apolloClient from '../providers/apolloClient';
+import gql from 'graphql-tag';
+
+import NonMobile from './non-mobile';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: null,
+      currentPolish: null,
+      following: []
+    };
+  }
+
+  // eslint-disable-next-line
+  @bind
+  setPolish(polish) {
+    this.setState({ currentPolish: polish });
+  }
+
+  // eslint-disable-next-line
+  @bind
+  setUser(user) {
+    this.setState({ currentUser: user });
+    this.setFollowing();
+  }
+
+  // eslint-disable-next-line
+  @bind
+  setFollowing() {
+    const { currentUser } = this.state;
+    apolloClient
+      .query({
+        query: FOLLOWING_QUERY,
+        fetchPolicy: 'network-only',
+        variables: { id: currentUser.id }
+      })
+      .then(response => {
+        const following = response.data.userById.following.map(user => user.id);
+        this.setState({ following });
+      })
+      .catch(error => this.setState({ error }));
+  }
+
+  @bind
+  follow(id) {
+    apolloClient
+      .mutate({
+        mutation: FOLLOW,
+        variables: {
+          userToFollowId: id
+        }
+      })
+      .then(() => this.setFollowing())
+      .catch(error => this.setState({ error }));
+  }
+
+  @bind
+  unfollow(id) {
+    apolloClient
+      .mutate({
+        mutation: UNFOLLOW,
+        variables: {
+          userToFollowId: id
+        }
+      })
+      .then(() => this.setFollowing())
+      .catch(error => this.setState({ error }));
+  }
+
+  @bind
+  logout() {
+    AuthProvider.deauthenticateUser();
+    this.setState({ currentUser: null });
+  }
+  componentWillMount() {
+    if (AuthProvider.isUserAuthenticated()) {
+      this.setUser(AuthProvider.getUser());
+    }
+  }
+  render(props, { currentUser, following }) {
     return (
-      <Router>
-        <div id="app">
-          <Header />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/filter/:filter" component={Home} />
-            {/* TODO: Implement loggedInUser provider */}
-            <Route path="/profile/" exact component={Profile} user="me" />
-            <Route path="/profile/:user" component={Profile} />
-            <Route path="/polish/:id" component={Polish} />
-            <Route path="/messages/" component={Messages} />
-            <Route component={Home} />
-          </Switch>
-          <ActionButton />
-        </div>
-      </Router>
+      <div id="app">
+        <NonMobile />
+        <ApolloProvider client={apolloClient}>
+          <Routes
+            setUser={this.setUser}
+            currentUser={currentUser}
+            following={following}
+            follow={this.follow}
+            unfollow={this.unfollow}
+            logout={this.logout}
+          />
+        </ApolloProvider>
+      </div>
     );
   }
 }
+
+const FOLLOWING_QUERY = gql`
+  query gqlFollowingQuery($id: String!) {
+    userById(id: $id) {
+      following {
+        id
+      }
+    }
+  }
+`;
+
+const FOLLOW = gql`
+  mutation gqlFollow($userToFollowId: String!) {
+    startFollow(userToFollowId: $userToFollowId) {
+      id
+    }
+  }
+`;
+
+const UNFOLLOW = gql`
+  mutation gqlUnfollow($userToFollowId: String!) {
+    stopFollow(userToFollowId: $userToFollowId) {
+      id
+    }
+  }
+`;
+
+export default App;

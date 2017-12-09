@@ -35,9 +35,10 @@ $color-primary: map-get($accent-colors, primary);
 $color-secondary: map-get($accent-colors, secondary);
 $color-accent: map-get($accent-colors, accent);
 $color-green: #42f4a1;
+$color-red: #f44141;
 // Greys
 $grey-colors: (
-  x-light : #f5f5fa,
+  x-light : #eff0f2,
   light : #d4dce7,
   medium : #b9c0cd,
   dark : #8d96a6,
@@ -51,20 +52,23 @@ $color-x-light-grey: map-get($grey-colors, x-light);
 // Brand Colors
 $color-twitter: #00aced;
 $color-facebook: #3b5998;
-$brand-colors: (twitter : $color-twitter, facebook : $color-facebook);
+$brand-colors: (
+  twitter : $color-twitter,
+  facebook : $color-facebook
+);
 // Font Colors
 $base-font-color: $color-x-dark-grey;
 $action-color: $color-primary;
 // Border
-$base-border-color: $color-light-grey;
+$base-border-color: $color-medium-grey;
 $base-border: 1px solid $base-border-color;
 // Background Colors
 $base-background-color: $color-x-light-grey;
 $secondary-background-color: tint($base-border-color, 75%);
 // Shadows
-$box-shadow-0: 0 0px 4px rgba($color-dark-grey, 1);
-$box-shadow-2: 0 2px 8px rgba($color-dark-grey, 1);
-$box-shadow-4: 0 4px 18px rgba($color-dark-grey, 1);
+$box-shadow-0: 0 0px 4px rgba(#000000, 0.6);
+$box-shadow-2: 0 2px 8px rgba(#000000, 0.6);
+$box-shadow-4: 0 4px 18px rgba(#000000, 0.4);
 $box-shadow: $box-shadow-4;
 // $shadow: inset 0 1px 3px rgba(#000, 0.06);
 // $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
@@ -73,3 +77,14 @@ $base-duration: 150ms;
 $base-timing: ease;
 // Layout
 $view-padding: 14rem 1rem 0 1rem;
+$header-height: 5.4rem;
+$extended-height: 6.5rem;
+%normal-view {
+  min-height: 100%;
+  width: 100%;
+  padding-top: $header-height;
+}
+%normal-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

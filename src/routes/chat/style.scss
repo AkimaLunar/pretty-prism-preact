@@ -1,0 +1,8 @@
+@import "../../style/base/variables";
+
+.chat {
+  @extend %normal-view;
+  @extend %normal-padding;
+  padding-bottom: 7.5rem;
+  position: relative;
+}

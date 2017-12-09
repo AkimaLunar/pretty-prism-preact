@@ -1,0 +1,50 @@
+@import "../../style/base/variables";
+
+.login {
+  @extend %normal-view;
+  @extend %normal-padding;
+  background: linear-gradient(180deg, #ffffff, $base-background-color);
+  &__heading {
+    text-align: center;
+    font-size: 2rem;
+    padding: 2rem 2rem 0 2rem;
+  }
+  &__login {
+    color: $color-primary;
+  }
+  &__signup {
+    color: $color-secondary;
+  }
+  &__sublabel {
+    color: $color-dark-grey;
+  }
+  &__input {
+    width: 100%;
+  }
+  &__buttongroup {
+    display: flex;
+    text-align: center;
+  }
+  &__button {
+    display: flex;
+    justify-content: center;
+    transition: all 0.25s ease-in-out;
+    &:first-of-type {
+      width: 24rem;
+      margin-right: 1rem;
+    }
+    &:last-of-type {
+      flex-grow: 1;
+    }
+  }
+  &__form {
+    z-index: 10;
+    position: relative;
+  }
+  &__svg {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

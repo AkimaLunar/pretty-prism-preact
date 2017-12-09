@@ -1,45 +1,37 @@
-import { h, Component } from 'preact';
-// import PropTypes from 'prop-types';
+import { h } from 'preact';
+import PropTypes from 'prop-types';
 import style from './style';
-
 import Item from '../item';
 
-export default class Feed extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      feed: null,
-      loading: true
-    };
-  }
-  componentDidMount() {
-    // fetch(props.search)
-    fetch(
-      'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/70d066a16cd4fabd06c3e79d06ab5b9c8f1273e2/src/fake-items.json'
-    )
-      .then(res => res.json())
-      .then(feed =>
-        this.setState({
-          feed: feed.data,
-          loading: false
-        })
-      );
-
-    // TODO: Error handling
-    // .catch(err => console.error(err));
-  }
-
-  render(props, { loading, feed }) {
+function Feed({ polishes }) {
+  if (!polishes)
     return (
-      <div class={style.feed}>
-        {loading ? (
-          <p>Fetching the goodness...</p>
-        ) : (
-          <main class={style.grid}>
-            {feed.map(item => <Item item={item} key={item._id} />)}
-          </main>
-        )}
-      </div>
+      <main class="flash">
+        <p class="flash__message">
+          <i class="twa twa--scream" /> Oopsy daisies&hellip; Something went
+          wrong! Try again.
+        </p>
+      </main>
     );
-  }
+  if (polishes.length < 1)
+    return (
+      <main class="flash">
+        <p class="flash__message">
+          No polishes here&hellip; <i class="twa twa--eyes" />
+        </p>
+      </main>
+    );
+  return (
+    <div class={style.feed}>
+      <main class={style.grid}>
+        {polishes.map(item => <Item item={item} key={item.id} />)}
+      </main>
+    </div>
+  );
 }
+
+Feed.propTypes = {
+  polishes: PropTypes.array
+};
+
+export default Feed;

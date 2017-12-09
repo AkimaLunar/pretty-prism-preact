@@ -1,49 +1,96 @@
 import { h, Component } from 'preact';
 // import PropTypes from 'prop-types';
 import style from './style';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Message from '../../components/message';
 
-export default class Messages extends Component {
+class Messages extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      messages: null,
-      loading: true
+  }
+
+  render({ gqlUser, user }) {
+    const setSender = (users, id) => {
+      const _users = users.map(user => user.id);
+      if (_users.indexOf(id) === 0) {
+        return users[1];
+      } else {
+        return users[0];
+      }
     };
-  }
-  componentDidMount() {
-    // TODO: API goes here
-    // fetch(props.search)
-    fetch(
-      'https://raw.githubusercontent.com/AkimaLunar/pretty-prism-preact/master/src/fake-messages.json'
-    )
-      .then(res => res.json())
-      .then(messages =>
-        this.setState({
-          messages: messages.data,
-          loading: false
-        })
+
+    if (gqlUser.loading) {
+      return (
+        <main class="flash">
+          <p class="flash__message">
+            Looking <i class="twa twa--eyes" />
+          </p>
+        </main>
       );
+    }
+    if (gqlUser.error) {
+      return (
+        <main class="flash">
+          <p class="flash__message">
+            <i class="twa twa--scream" /> Oopsy daisies&hellip; Something went
+            wrong! Try again.
+          </p>
+        </main>
+      );
+    }
 
-    // TODO: Error handling
-    // .catch(err => console.error(err));
-  }
-
-  render(props, { loading, messages }) {
+    if (gqlUser.userById.chats.length < 1) {
+      return (
+        <main class="flash">
+          <p class="flash__message">
+            Sorry, {user.username}, it doesn&rsquo;t look like you have any
+            messages yet. Ask someone to swap a polish with them to start
+            chatting.
+          </p>
+        </main>
+      );
+    }
     return (
-      <div class={style.messages}>
-        <h1>Messages</h1>
-        {loading ? (
-          <p>Fetching the goodness...</p>
-        ) : (
-          <main>
-            {messages.map(message => (
-              <Message message={message} key={message._id} />
-            ))}
-          </main>
-        )}
-      </div>
+      <main class={style.messages}>
+        {gqlUser.userById.chats.map(chat => (
+          <Message
+            user={setSender(chat.users, user.id)}
+            count={chat.messages.length}
+            id={chat.id}
+            key={chat.id}
+          />
+        ))}
+      </main>
     );
   }
 }
+
+const USER_QUERY = gql`
+  query gqlUser($id: String!) {
+    userById(id: $id) {
+      id
+      chats {
+        id
+        messages {
+          text
+        }
+        users {
+          id
+          username
+          avatar
+        }
+      }
+    }
+  }
+`;
+
+export default graphql(USER_QUERY, {
+  name: 'gqlUser',
+  options: ownProps => ({
+    variables: {
+      id: ownProps.user.id
+    }
+  })
+})(Messages);

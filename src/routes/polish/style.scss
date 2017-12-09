@@ -1,20 +1,16 @@
 @import "../../style/base/variables";
 
 .polish {
-  &__image {
+  @extend %normal-view;
+  &__image,
+  &__button {
     width: 100%;
   }
 
   &__footer {
-    padding: 1rem 1rem 0 1rem;
-  }
-
-  &__button,
-  &__textarea {
-    width: 100%;
-  }
-  &__textarea {
-    margin: 1rem 0;
+    @extend %normal-padding;
+    padding-top: 0;
+    padding-bottom: 1rem;
   }
 
   &__info {
@@ -36,7 +32,13 @@
   &__heading {
     margin-top: 2rem;
   }
-  &__comment {
-    margin: 0.5rem 0;
+
+  &__p {
+    text-align: center;
+    i {
+      vertical-align: middle;
+      font-size: 120%;
+      margin: 0;
+    }
   }
 }

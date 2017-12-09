@@ -1,6 +1,6 @@
 // Preact
 import { h, Component } from 'preact';
-import { bind } from 'decko';
+import { bind } from 'decko'; // eslint-disable-line no-unused-vars
 import AuthProvider from '../providers/AuthProvider';
 
 // Router

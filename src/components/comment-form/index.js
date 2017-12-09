@@ -6,10 +6,10 @@ import linkState from 'linkstate';
 class CommentForm extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      comment: ''
+    };
   }
-  state = {
-    comment: ''
-  };
   submit(e) {
     e.preventDefault();
     this.props.createComment(this.state.comment);

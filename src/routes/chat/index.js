@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { bind } from 'decko';
+import { bind } from 'decko'; // eslint-disable-line no-unused-vars
 import style from './style';
 import ChatBubble from '../../components/chat-bubble';
 import ChatInput from '../../components/chat-input';

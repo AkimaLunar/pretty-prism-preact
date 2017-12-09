@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import Link from 'react-router-dom/Link';
 import style from './style';
 
 import { withRouter } from 'react-router';

@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
-import { bind } from 'decko';
+import { bind } from 'decko'; // eslint-disable-line no-unused-vars
 import linkState from 'linkstate';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';

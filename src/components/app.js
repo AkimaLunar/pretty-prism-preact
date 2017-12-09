@@ -11,6 +11,8 @@ import { ApolloProvider } from 'react-apollo';
 import apolloClient from '../providers/apolloClient';
 import gql from 'graphql-tag';
 
+import NonMobile from './non-mobile';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -90,6 +92,7 @@ class App extends Component {
   render(props, { currentUser, following }) {
     return (
       <div id="app">
+        <NonMobile />
         <ApolloProvider client={apolloClient}>
           <Routes
             setUser={this.setUser}

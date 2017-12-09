@@ -1,0 +1,37 @@
+@import "../../style/base/variables";
+
+.nonmobile {
+  display: none;
+  @media screen and (min-width: 600px) {
+    display: block;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background-color: $color-secondary;
+  }
+  &__container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 8rem 4rem;
+    justify-content: space-around;
+  }
+
+  svg {
+    display: block;
+    fill: #ffffff;
+  }
+
+  &__heading {
+    display: block;
+    color: white;
+    i {
+      vertical-align: middle;
+      font-size: 120%;
+      margin: 0;
+    }
+  }
+}

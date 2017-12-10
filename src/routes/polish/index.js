@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import style from './style';
 import { Link } from 'react-router-dom';
 import { bind } from 'decko'; // eslint-disable-line no-unused-vars
-
+import { CLOUDINARY } from '../../config';
 import { graphql, compose } from 'react-apollo';
 import {
   POLISH_QUERY,
@@ -96,6 +96,7 @@ class Polish extends Component {
       );
     }
     const { images, owners } = gqlPolishQuery.polish;
+    const imgSrc = `${CLOUDINARY}/image/fetch/w_600,h_600,c_fill/${images[0]}`;
     const isOwner = user && user.id === owners[0].id ? true : false;
     const chatButton = !isOwner ? (
       <button
@@ -113,7 +114,7 @@ class Polish extends Component {
     // TODO: Add swipe element here
     return (
       <main class={style.polish}>
-        <img src={images[0]} class={style.polish__image} />
+        <img src={imgSrc} class={style.polish__image} />
         <footer class={style.polish__footer}>
           <section class={style.polish__info}>
             <Link to={`/profile/${owners[0].username}`}>

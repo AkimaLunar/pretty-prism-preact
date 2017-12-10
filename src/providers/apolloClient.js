@@ -1,4 +1,5 @@
 // Apollo
+import { GRAPHQL } from '../config';
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,7 +11,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { WebSocketLink } from 'apollo-link-ws';
 
 import AuthProvider from './AuthProvider';
-const PATH = 'api.prettyprism.com';
+const PATH = GRAPHQL;
 //const PATH = 'localhost:8282';
 
 const httpLink = new createUploadLink({

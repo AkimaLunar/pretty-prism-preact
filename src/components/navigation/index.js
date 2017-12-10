@@ -39,7 +39,7 @@ export default function Navigation(props) {
             class={style.navigation__username}
           >
             {props.user.username}&ensp;
-            <Avatar user={props.user} online={true} />
+            <Avatar user={props.user} online={true} size={40} />
           </Link>
         ) : (
           <Link to="/login/">

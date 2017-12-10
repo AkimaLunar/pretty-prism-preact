@@ -7,11 +7,11 @@ import { CLOUDINARY } from '../../config';
 import { graphql, compose } from 'react-apollo';
 import {
   POLISH_QUERY,
-  CHAT_QUERY,
   CREATE_COMMENT_MUTATION,
   DELETE_COMMENT_MUTATION
 } from './gql';
 import UserChip from '../../components/userchip';
+import ChatButton from '../../components/chat-button';
 import CommentList from '../../components/comment-list';
 
 class Polish extends Component {
@@ -21,24 +21,6 @@ class Polish extends Component {
       chatId: null,
       error: null
     };
-  }
-
-  chat(e) {
-    e.preventDefault();
-    const id = this.props.gqlPolishQuery.polish.owners[0].id;
-    if (!id) {
-      this.setState({ error: 'No polish.' });
-      return;
-    }
-    this.context.client
-      .query({
-        query: CHAT_QUERY,
-        variables: { receiverId: id }
-      })
-      .then(response => {
-        this.props.history.push(`/messages/${response.data.chatByUser.id}`);
-      })
-      .catch(error => this.setState({ error }));
   }
 
   @bind
@@ -98,13 +80,12 @@ class Polish extends Component {
     const { images, owners } = gqlPolishQuery.polish;
     const imgSrc = `${CLOUDINARY}/image/fetch/w_600,h_600,c_fill/${images[0]}`;
     const isOwner = user && user.id === owners[0].id ? true : false;
-    const chatButton = !isOwner ? (
-      <button
-        class={`${style.polish__button} button button--primary`}
-        onClick={e => this.chat(e)}
-      >
-        Ask to swap
-      </button>
+    const chatButton = !user ? (
+      <p class={`font__accent ${style.polish__p}`}>
+        Like it? <Link to={'/login'}>Create an account</Link> to swap.
+      </p>
+    ) : !isOwner ? (
+      <ChatButton receiverId={this.props.gqlPolishQuery.polish.owners[0].id} />
     ) : (
       <p class={`font__accent ${style.polish__p}`}>
         This is your <i class="twa twa--heart" /> polish.
@@ -161,9 +142,6 @@ Polish.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  }),
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
   })
 };
 

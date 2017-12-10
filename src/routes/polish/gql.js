@@ -23,14 +23,6 @@ export const POLISH_QUERY = gql`
   }
 `;
 
-export const CHAT_QUERY = gql`
-  query gqlChat($receiverId: String!) {
-    chatByUser(receiverId: $receiverId) {
-      id
-    }
-  }
-`;
-
 export const CREATE_COMMENT_MUTATION = gql`
   mutation gqlCommentMutation($polishId: String!, $text: String!) {
     createComment(polishId: $polishId, text: $text) {

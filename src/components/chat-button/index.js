@@ -1,8 +1,6 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
-import linkState from 'linkstate';
-import { graphql, compose } from 'react-apollo';
 import { CHAT_QUERY } from './gql';
 
 class ChatButton extends Component {

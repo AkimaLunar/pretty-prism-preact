@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
 import style from './style';
-
+import { CLOUDINARY } from '../../config';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -42,6 +42,9 @@ class Profile extends Component {
         </div>
       );
     }
+    const imgSrc = `${CLOUDINARY}/image/fetch/w_200,h_200,c_fill/${
+      gqlUserQuery.userByUsername.avatar
+    }`;
     const _following =
       following && following.indexOf(gqlUserQuery.userByUsername.id) !== -1;
     const settings = self ? (
@@ -70,7 +73,7 @@ class Profile extends Component {
       <div class={style.profile}>
         <main class={style.profile__main}>
           <img
-            src={gqlUserQuery.userByUsername.avatar}
+            src={imgSrc}
             class={style.profile__avatar}
             alt={`${gqlUserQuery.userByUsername.username} profile`}
           />

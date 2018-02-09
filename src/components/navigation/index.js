@@ -10,7 +10,14 @@ export default function Navigation(props) {
     <ul class={style.navigation}>
       <li class={style.navigation__left}>
         {this.props.data.extended ? (
-          <h1 class={style.navigation__logo}>PrettyPrism</h1>
+          <Link to="/">
+            <h1 class={style.navigation__logo}>PrettyPrism</h1>
+          </Link>
+        ) : props.data.back ? (
+          <Link to={props.data.back}>
+            <i class={`${style.navigation__back} twa twa--point-left `} />&nbsp;Back&ensp;|&ensp;
+            <span class={style.navigation__title}>{this.props.data.title}</span>
+          </Link>
         ) : (
           <a
             onClick={e => {
@@ -18,26 +25,29 @@ export default function Navigation(props) {
               props.goBack();
             }}
           >
-            <i
-              class={`${style.navigation__back} twa twa--point-left `}
-            />&nbsp;Back&ensp;|&ensp;
+            <i class={`${style.navigation__back} twa twa--point-left `} />&nbsp;Back&ensp;|&ensp;
             <span class={style.navigation__title}>{this.props.data.title}</span>
           </a>
         )}
       </li>
       <li class={style.navigation__right}>
-        <Link
-          to={{
-            pathname: `/profile/${props.user.username}`,
-            state: {
-              data: props.user
-            }
-          }}
-          class={style.navigation__username}
-        >
-          {props.user.username}&ensp;
-          <Avatar user={props.user} online={true} />
-        </Link>
+        {this.props.user ? (
+          <Link
+            to={{
+              pathname: '/profile/'
+            }}
+            class={style.navigation__username}
+          >
+            {props.user.username}&ensp;
+            <Avatar user={props.user} online={true} size={40} />
+          </Link>
+        ) : (
+          <Link to="/login/">
+            &nbsp;Login&ensp;|&ensp;<i
+              class={`${style.navigation__back} twa twa--key `}
+            />
+          </Link>
+        )}
       </li>
     </ul>
   );

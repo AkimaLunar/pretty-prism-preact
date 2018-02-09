@@ -12,67 +12,9 @@
     text-decoration: none;
   }
 
-  &__nav,
-  &__extended {
+  &__nav {
     padding: 0 1rem;
     background: $color-lilac;
-  }
-
-  &__nav {
-    height: 5.4rem;
-  }
-
-  &__extended {
-    height: 2rem;
-    animation: slideInFromTop 0.2s ease-in-out 1;
-  }
-
-  &__float {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-content: start;
-    align-items: center;
-    top: 0;
-    height: 6.5rem;
-    font-size: 1.75rem;
-    padding: 1rem 2rem;
-    background: white;
-    box-shadow: $box-shadow-4;
-    border-radius: $base-border-radius;
-    animation: fadeIn 0.2s ease-in-out 1;
-    & a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: $font-weight-bold;
-      color: transparentize($color-primary, 0.5);
-      margin-right: 4rem;
-    }
-
-    & a:hover,
-    & a:active {
-      color: $color-primary;
-    }
-
-    & a.active {
-      color: $color-primary;
-    }
-  }
-  @keyframes slideInFromTop {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+    height: $header-height;
   }
 }

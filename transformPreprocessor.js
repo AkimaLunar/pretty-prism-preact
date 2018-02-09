@@ -11,4 +11,4 @@ const transformer = () => {
   return babelJest.createTransformer(babelConfig);
 };
 
-module.exports = transformer();
+export default transformer();

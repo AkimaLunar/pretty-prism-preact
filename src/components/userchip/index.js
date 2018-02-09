@@ -1,17 +1,19 @@
 import { h, Component } from 'preact';
 import style from './style';
 import PropTypes from 'prop-types';
+import { CLOUDINARY } from '../../config';
 
 export default class UserChip extends Component {
   constructor(props) {
     super(props);
   }
   render({ user }) {
+    const imgSrc = `${CLOUDINARY}/image/fetch/w_30,h_30,c_fill/${user.avatar}`;
     return (
       <figure class={style.figure}>
         {user.avatar ? (
           <img
-            src="http://i.pravatar.cc/34"
+            src={imgSrc}
             class={style.avatar}
             alt={`${user.username} profile`}
           />

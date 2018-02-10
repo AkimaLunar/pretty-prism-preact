@@ -6,6 +6,6 @@
  * @param {object} env - options passed to CLI.
  * @param {WebpackConfigHelpers} helpers - object with useful helpers when working with config.
  **/
-export default function(config, env, helpers) {
+export default function (config, env, helpers) {
   /** you can change config here **/
 }

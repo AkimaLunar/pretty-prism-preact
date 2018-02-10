@@ -42,7 +42,7 @@
     "build": "preact build --no-prerender",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
-    "deploy": "preact build --no-prerender && surge ./build prettyprism.com"
+    "deploy": "preact build --no-prerender && mv build/index.html build/200.html && surge ./build prettyprism.com"
   },
   "keywords": [],
   "author": "",

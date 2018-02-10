@@ -5,4 +5,11 @@
   @extend %normal-padding;
   padding-bottom: 7.5rem;
   position: relative;
+  @media screen and (min-width: $breakpoint-mobile) {
+    margin: $header-height+2 auto 0 auto;
+    padding-top: 0;
+    max-width: $breakpoint-mobile;
+    border-radius: 2px;
+    border: $base-border;
+  }
 }

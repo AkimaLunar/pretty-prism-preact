@@ -1,9 +1,14 @@
 @import "../../style/base/variables";
 
 .welcome {
+  @extend %desktop-view;
   padding: $view-padding;
   min-height: 100%;
   width: 100%;
+  @media screen and (min-width: $breakpoint-mobile) {
+    margin: 18rem auto 0 auto;
+    padding: 2rem;
+  }
   ul {
     list-style: none;
     padding: 0;

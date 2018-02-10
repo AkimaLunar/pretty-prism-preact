@@ -4,12 +4,20 @@
   min-height: 100%;
   width: 100%;
   background: linear-gradient(180deg, $color-accent, $base-background-color);
+  @extend %desktop-view;
+  @media screen and (min-width: $breakpoint-mobile) {
+    margin: $header-height+2 auto 0 auto;
+    padding-top: 0;
+  }
   &__circle {
     position: absolute;
     top: 0;
     width: 100%;
     fill: transparentize($base-background-color, 0.1);
     z-index: 0;
+    @media screen and (min-width: $breakpoint-mobile) {
+      display: none;
+    }
   }
   &__main {
     position: relative;

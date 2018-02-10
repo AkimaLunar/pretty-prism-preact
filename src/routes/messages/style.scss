@@ -2,4 +2,9 @@
 
 .messages {
   @extend %normal-view;
+  @extend %desktop-view;
+  @media screen and (min-width: $breakpoint-mobile) {
+    margin: $header-height+2 auto 0 auto;
+    padding-top: 0;
+  }
 }

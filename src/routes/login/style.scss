@@ -3,7 +3,14 @@
 .login {
   @extend %normal-view;
   @extend %normal-padding;
+  @extend %desktop-view;
   background: linear-gradient(180deg, #ffffff, $base-background-color);
+  @media screen and (min-width: $breakpoint-mobile) {
+    margin: $header-height+2 auto 0 auto;
+    padding-top: 0;
+    box-shadow: none;
+    border: $base-border;
+  }
   &__heading {
     text-align: center;
     font-size: 2rem;

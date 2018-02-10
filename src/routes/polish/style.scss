@@ -2,6 +2,12 @@
 
 .polish {
   @extend %normal-view;
+  @extend %desktop-view;
+  @media screen and (min-width: $breakpoint-mobile) {
+    margin: $header-height+2 auto;
+    padding-top: 0;
+    border: $base-border;
+  }
   &__image,
   &__button {
     width: 100%;
@@ -19,6 +25,9 @@
     @extend %normal-padding;
     padding-top: 0;
     padding-bottom: 1rem;
+    @media screen and (min-width: $breakpoint-mobile) {
+      background: transparentize($color-lilac, .4);
+    }
   }
 
   &__info {
@@ -39,6 +48,9 @@
 
   &__heading {
     margin-top: 2rem;
+    @media screen and (min-width: $breakpoint-mobile) {
+      color: $color-x-dark-grey;
+    }
   }
 
   &__p {

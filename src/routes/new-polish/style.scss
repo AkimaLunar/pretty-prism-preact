@@ -3,12 +3,20 @@
 .newpolish {
   @extend %normal-view;
   @extend %normal-padding;
+  @extend %desktop-view;
+  @media screen and (min-width: $breakpoint-mobile) {
+    margin: $header-height+2 auto 0 auto;
+    padding-top: 0;
+    min-height: $breakpoint-mobile*1.5;
+    background-color: $color-lemoncurd;
+  }
   &__heading {
     text-align: center;
     font-size: 2rem;
     padding: 2rem 2rem 0 2rem;
     color: $color-primary;
   }
+
   &__label + p {
     margin-bottom: 1rem;
   }

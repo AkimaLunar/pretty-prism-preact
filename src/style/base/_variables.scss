@@ -17,7 +17,7 @@ $font-weight-bold: 700;
 $base-border-radius: 4px;
 
 // Breakpoints
-$breakpoint-mobile: 550px;
+$breakpoint-mobile: 42rem;
 
 // Theme Colors
 $color-bubblegum: #ff66eb;
@@ -66,12 +66,11 @@ $base-border: 1px solid $base-border-color;
 $base-background-color: $color-x-light-grey;
 $secondary-background-color: tint($base-border-color, 75%);
 // Shadows
-$box-shadow-0: 0 0px 4px rgba(#000000, 0.6);
-$box-shadow-2: 0 2px 8px rgba(#000000, 0.6);
+$box-shadow-0: 0 0px 4px rgba(#000000, 0.3);
+$box-shadow-2: 0 2px 8px rgba(#000000, 0.3);
 $box-shadow-4: 0 4px 18px rgba(#000000, 0.4);
 $box-shadow: $box-shadow-4;
-// $shadow: inset 0 1px 3px rgba(#000, 0.06);
-// $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
+
 // Animations
 $base-duration: 150ms;
 $base-timing: ease;
@@ -87,4 +86,13 @@ $extended-height: 6.5rem;
 %normal-padding {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+%desktop-view {
+  @media screen and (min-width: $breakpoint-mobile) {
+    //border: $base-border;
+    box-shadow: $box-shadow-0;
+    max-width: $breakpoint-mobile;
+    border-radius: 2px;
+    background: white;
+  }
 }
